@@ -30,6 +30,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="/dist/plugins/daterangepicker/daterangepicker-bs3.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="/dist/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link rel="stylesheet" href="http://jhollingworth.github.io/bootstrap-wysihtml5/lib/js/prettify.js">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- IonIcons -->
@@ -103,7 +104,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- datepicker -->
 <script src="/dist/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- Bootstrap WYSIHTML5 -->
-<script src="/dist/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<script src="http://jhollingworth.github.io/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.js"></script>
+<script src="http://jhollingworth.github.io/bootstrap-wysihtml5/src/bootstrap-wysihtml5.js"></script>
 <!-- Slimscroll -->
 <script src="/dist/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
