@@ -10,12 +10,4 @@ class DashboardController extends Controller
     {
         return view('dashboard.v1');
     }
-    public function versiontwo()
-    {
-        return view('dashboard.v2');
-    }
-    public function versionthree()
-    {
-        return view('dashboard.v3');
-    }
 }

@@ -1,5 +1,5 @@
 <!-- Main Footer -->
-<footer class="main-footer">
+<footer class="main-footer" style="text-align: right">
     <!-- Default to the left -->
-    <strong>Laravel Starter </strong>
+    <strong>ADGROUP </strong>
   </footer>
