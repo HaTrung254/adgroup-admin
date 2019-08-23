@@ -73,8 +73,9 @@
     
 @endsection
 @section('javascript')
-<script src="http://jhollingworth.github.io/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.js"></script>
 <script type="text/javascript">
-    $('.textarea').wysihtml5();
+    $(function () {
+        $('.textarea').summernote()
+    })
 </script>
 @endsection
