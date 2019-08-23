@@ -9,7 +9,7 @@
         <div class="form-group row">
             <label for="image_url" class="col-sm-2 control-label">Ảnh hiện tại</label>
             <div class="col-sm-10">
-                <img style="width:200px;height: auto" src="{{ asset($slider->image_url) }}">
+                <img style="width:200px;height: auto" src="@assetUrl($slider->image_url)">
             </div>
         </div>
         <div class="form-group row">
@@ -73,9 +73,4 @@
     
 @endsection
 @section('javascript')
-<script type="text/javascript">
-    $(function () {
-        $('.textarea').summernote()
-    })
-</script>
 @endsection

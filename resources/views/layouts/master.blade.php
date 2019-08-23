@@ -12,24 +12,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="csrf-token" content={{csrf_token()}}>
 
     <title>ADGROUP</title>
-    <link rel="stylesheet" href="/css/app.css"></link>
-    <link rel="stylesheet" href="/dist/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="@asset('/css/app.css')"></link>
+    <link rel="stylesheet" href="@asset('/dist/plugins/font-awesome/css/font-awesome.min.css')">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css')">
     <!-- Theme style -->
-    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="@asset('/dist/css/adminlte.min.css')">
     <!-- iCheck -->
-    <link rel="stylesheet" href="/dist/plugins/iCheck/flat/blue.css">
+    <link rel="stylesheet" href="@asset('/dist/plugins/iCheck/flat/blue.css')">
     <!-- Morris chart -->
-    <link rel="stylesheet" href="/dist/plugins/morris/morris.css">
+    <link rel="stylesheet" href="@asset('/dist/plugins/morris/morris.css')">
     <!-- jvectormap -->
-    <link rel="stylesheet" href="/dist/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="@asset('/dist/plugins/jvectormap/jquery-jvectormap-1.2.2.css')">
     <!-- Date Picker -->
-    <link rel="stylesheet" href="/dist/plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="@asset('/dist/plugins/datepicker/datepicker3.css')">
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="/dist/plugins/daterangepicker/daterangepicker-bs3.css">
+    <link rel="stylesheet" href="@asset('/dist/plugins/daterangepicker/daterangepicker-bs3.css')">
 
-    <link rel="stylesheet" href="/dist/plugins/summernote/css/summernote-bs4.css">
+    <link rel="stylesheet" href="@asset('/dist/plugins/summernote/css/summernote-bs4.css')">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- IonIcons -->
@@ -56,13 +56,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <h3 class="card-title">{{ !empty($title) ? $title : "ADGROUP" }}</h3>
                                     @if(!empty($hasSearch))
                                         <div class="card-tools">
-                                            <div class="input-group input-group-sm" style="width: 150px;">
+                                            <div class="input-group input-group-sm">
                                                 <input type="text" name="table_search" class="form-control float-right"
-                                                       placeholder="Search">
-
+                                                       placeholder="Tìm kiếm">
                                                 <div class="input-group-append">
                                                     <button type="submit" class="btn btn-default"><i class="fas fa-search"></i>
                                                     </button>
+                                                    <a href="{{ $routeCreate }}" style="margin-left: 10px" class="pull-right btn btn-success">
+                                                        <i class="fa fa-plus"></i> Thêm
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -88,7 +90,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- ./wrapper -->
 @endguest
 <!-- jQuery -->
-<script src="/dist/plugins/jquery/jquery.min.js"></script>
+<script src="@asset('/dist/plugins/jquery/jquery.min.js')"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -96,20 +98,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
     $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
-<script src="/dist/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="@asset('/dist/plugins/bootstrap/js/bootstrap.bundle.min.js')"></script>
 <!-- daterangepicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
-<script src="/dist/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="@asset('/dist/plugins/daterangepicker/daterangepicker.js')"></script>
 <!-- datepicker -->
-<script src="/dist/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="@asset('/dist/plugins/datepicker/bootstrap-datepicker.js')"></script>
 <!-- Slimscroll -->
-<script src="/dist/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="@asset('/dist/plugins/slimScroll/jquery.slimscroll.min.js')"></script>
 <!-- FastClick -->
-<script src="/dist/plugins/fastclick/fastclick.js"></script>
+<script src="@asset('/dist/plugins/fastclick/fastclick.js')"></script>
 
-<script src="/dist/plugins/summernote/js/summernote-bs4.min.js"></script>
+<script src="@asset('/dist/plugins/summernote/js/summernote-bs4.min.js')"></script>
 <!-- AdminLTE App -->
-<script src="/dist/js/adminlte.js"></script>
+<script src="@asset('/dist/js/adminlte.js')"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.textarea').summernote();
+        $('.btnDelete').click( function (e) {
+            if(confirm("Bạn có chắc chắn muốn xóa?")) {
+                return true;
+            } else {
+                e.preventDefault();
+                return false;
+            }
+        });
+    })
+</script>
 @yield('javascript')
 </body>
 </html>
