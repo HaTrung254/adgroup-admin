@@ -29,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -47,6 +47,8 @@ class LoginController extends Controller
         if(Auth::attempt($credentials))
         {
             return redirect()->route('sliders');
+        } else {
+            return redirect()->route('login')->withErrors('Sai tài khoản hoặc mật khẩu');
         }
     }
 

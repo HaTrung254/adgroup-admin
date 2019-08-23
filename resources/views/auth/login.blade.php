@@ -2,12 +2,16 @@
 @section('content')
     <div class="login-box">
         <div class="login-logo">
-            ADGROUP
+            <img src="{{ asset('/img/logo.png') }}">
         </div>
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Đăng nhập</p>
-
+                @if($errors->any())
+                    <label class="label label-danger form-control">
+                        <i class="fa fa-remove"></i>
+                        {{ $errors->first() }}
+                    </label>
+                @endif
                 <form action="{{ route('login') }}" method="post">
                     @csrf
                     <div class="input-group mb-3">
