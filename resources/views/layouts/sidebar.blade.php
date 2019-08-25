@@ -42,6 +42,18 @@
                         <p>Sản phẩm</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('new_categories') }}" class="nav-link">
+                        <i class="nav-icon fa fas fa-circle-notch"></i>
+                        <p>Danh mục tin tức</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('news') }}" class="nav-link">
+                        <i class="nav-icon fa fas fa-circle-notch text-info"></i>
+                        <p>Tin tức</p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

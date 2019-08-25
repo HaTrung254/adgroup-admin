@@ -34,6 +34,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- IonIcons -->
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <style type="text/css">
+        .nav-sidebar li:nth-child({{!empty($navNumber) ? $navNumber : "1"}}) {
+
+        }
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -123,6 +128,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 return false;
             }
         });
+        $('.nav-sidebar li:nth-child({{!empty($navNumber) ? $navNumber : "1"}}) a').addClass('active');
     })
 </script>
 @yield('javascript')
