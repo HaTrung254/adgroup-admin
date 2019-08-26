@@ -8,7 +8,8 @@
         <tr>
             <th>Title</th>
             <th>Title (EN)</th>
-            <th>Thứ tự</th>
+            <th>Hiển thị trên website</th>
+            <th>Thứ tự hiển thị</th>
             <th><i class="fa fa-tasks" style=""></i></th>
         </tr>
         </thead>
@@ -17,6 +18,7 @@
             <tr>
                 <td>{!! $item->vn_title !!}</td>
                 <td>{!! $item->en_title !!}</td>
+                <td>@isDisplay($item->is_display)</td>
                 <td>{!! $item->order !!}</td>
                 <td>
                     <a href="{{ route('category_edit', $item->id) }}" class="btn btn-primary">

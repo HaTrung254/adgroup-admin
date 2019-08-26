@@ -3,7 +3,7 @@
     @if($errors->any())
         <span class="label label-danger form-control"><i class="fa fa-warning"></i> Có lỗi xảy ra, vui lòng thử lại.</span>
     @endif
-    <form action="{{ empty($category->id) ? route('category_create') : route('category_edit', $category->id) }}" method="POST" class="form-horizontal card-body">
+    <form action="{{ empty($category->id) ? route('new_category_create') : route('new_category_edit', $category->id) }}" method="POST" class="form-horizontal card-body">
         {{ csrf_field() }}
         <input type="hidden" name="id" value="@getIfEmpty($category->id)">
         <div class="form-group row">

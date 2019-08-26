@@ -8,5 +8,5 @@ class Categories extends Model
 {
     protected $table = 'product_categories';
     public $timestamps = false;
-    public $fillable = ['vn_title', 'en_title', 'order'];
+    public $fillable = ['vn_title', 'en_title', 'order', 'is_display'];
 }
