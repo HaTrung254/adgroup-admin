@@ -1,32 +1,30 @@
 @extends('layouts.master')
 @section('content')
     @if($errors->any())
-        <span class="label label-success form-control"><i class="fa fa-check"></i> Cập nhật sản phẩm thành công</span>
+        <span class="label label-success form-control"><i class="fa fa-check"></i> Cập nhật danh mục thành công</span>
     @endif
     <table class="table table-hover">
         <thead>
         <tr>
             <th>Title</th>
-            <th>Ảnh</th>
-            <th>Nội dung</th>
-            <th>Giá</th>
+            <th>Title (EN)</th>
             <th>Hiển thị trên website</th>
+            <th>Thứ tự hiển thị</th>
             <th><i class="fa fa-tasks" style=""></i></th>
         </tr>
         </thead>
         <tbody>
-        @foreach ($products as $item)
+        @foreach ($cates as $item)
             <tr>
                 <td>{!! $item->vn_title !!}</td>
-                <td><img style="width:200px;height: auto" src="{{ asset($item->image_url) }}" /></td>
-                <td>{!! $item->vn_content !!}</td>
-                <td>{{ number_format($item->price) }}</td>
+                <td>{!! $item->en_title !!}</td>
                 <td>@isDisplay($item->is_display)</td>
+                <td>{!! $item->order !!}</td>
                 <td>
-                    <a href="{{ route('product_edit', $item->id) }}" class="btn btn-primary">
+                    <a href="{{ route('new_category_edit', $item->id) }}" class="btn btn-primary">
                         <i class="fa fa-edit"></i> Sửa
                     </a>
-                    <a class="btn btn-danger btnDelete" href="{{ route('product_delete', $item->id) }}">
+                    <a class="btn btn-danger btnDelete" href="{{ route('new_category_delete', $item->id) }}">
                         <i class="fa fa-remove"></i> Xóa
                     </a>
                 </td>
@@ -35,7 +33,6 @@
         </tbody>
     </table>
     <div class="pull-right" style="padding:10px">
-        {{ $products->links() }}
+        {{ $cates->links() }}
     </div>
-
 @endsection

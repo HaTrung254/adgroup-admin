@@ -37,6 +37,13 @@ class BladeServiceProvider extends ServiceProvider
             return "<?php echo asset($expression); ?>";
         });
 
+        Blade::directive('isDisplay', function ($expression) {
+            return "<?php echo $expression ? 'HIển thị' : 'Không hiển thị' ; ?>";
+        });
+
+        Blade::directive('dateFormat', function ($expression) {
+            return "<?php echo \App\Helpers\BaseHelper::dateTimeFormat($expression); ?>";
+        });
     }
 
 }

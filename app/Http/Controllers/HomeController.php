@@ -91,7 +91,9 @@ class HomeController extends Controller
     public function setCategoryValue($request){
         return [
             'vn_title' => $request->get('vn_title'),
-            'en_title' => $request->get('en_title')
+            'en_title' => $request->get('en_title'),
+            'order' => $request->get('order'),
+            'is_display' => $request->get('is_display') == "on" ? 1 : 0
         ];
     }
 
@@ -155,6 +157,7 @@ class HomeController extends Controller
             'vn_content' => $request->get('vn_content'),
             'en_content' => $request->get('en_content'),
             'price' => $request->get('price'),
+            'is_display' => $request->get('is_display') == "on" ? 1 : 0
         ];
         if($request->hasFile('image_url')) {
             $file = $request->file('image_url');
@@ -214,6 +217,58 @@ class HomeController extends Controller
         return redirect()->route('products')->withErrors("");
     }
 
+    public function newCategories(){
+        $cates = NewCategories::orderBy('order', 'desc')->paginate(15);
+        return view('newcategories.list', ['cates' => $cates, 'hasSearch' => true,
+            'routeCreate' => route('new_category_create'), 'navNumber' => static::NEW_CATEGORIES]);
+    }
+
+    public function newCategoryCreate(Request $request){
+        if($request->isMethod('POST')) {
+            try{
+                DB::beginTransaction();
+                $value = $this->setCategoryValue($request);
+                $cate = new NewCategories();
+                $cate->insert($value);
+                DB::commit();
+                return redirect()->route('new_categories')->withErrors("");
+            } catch (\Exception $e) {
+                DB::rollback();
+                return redirect()->route('new_category_create')->withErrors("");
+            }
+        }
+        return view('newcategories.detail', ['navNumber' => static::NEW_CATEGORIES]);
+    }
+
+    public function newCategoryEdit($id, Request $request){
+        $id = !empty($id) ? $id : $request->get('id');
+        $cate = NewCategories::find($id);
+        if($request->isMethod('POST')) {
+            if($cate) {
+                try {
+                    DB::beginTransaction();
+                    $value = $this->setCategoryValue($request);
+                    $cate->update($value);
+                    DB::commit();
+                    return redirect()->route('new_categories')->withErrors("");
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    return redirect()->route('new_category_edit', $id)->withErrors("");
+                }
+            }
+        }
+        return view('newcategories.detail', ['category' => $cate,'navNumber' => static::CATEGORIES]);
+    }
+
+    public function newCategoryDelete($id){
+        $cate = NewCategories::find($id);
+        if($cate != null) {
+            $cate->delete();
+        }
+
+        return redirect()->route('new_categories')->withErrors("");
+    }
+
     public function news(){
         $news = News::paginate(10);
         return view('news.list', ['news' => $news, 'hasSearch' => true,
@@ -221,15 +276,17 @@ class HomeController extends Controller
     }
 
     public function setNewValue($request){
+        $dateArr = explode('/', $request->get('release_at'));
         $value = [
             'category_id' => $request->get('category_id'),
             'vn_title' => $request->get('vn_title'),
             'en_title' => $request->get('en_title'),
             'vn_content' => $request->get('vn_content'),
             'en_content' => $request->get('en_content'),
-            'is_display' => $request->get('is_display'),
-            'release_at' => $request->get('release_at'),
+            'is_display' => $request->get('is_display') == "on" ? 1 : 0,
+            'release_at' => $dateArr[2].'-'.$dateArr[0].'-'.$dateArr[1]
         ];
+        dd($value);
         if($request->hasFile('image_url')) {
             $file = $request->file('image_url');
             $fileName = date('YmdHis') . "." . $file->getClientOriginalExtension();
@@ -263,16 +320,16 @@ class HomeController extends Controller
         $new = News::find($id);
         if($request->isMethod('POST')) {
             if($new) {
-                try {
+//                try {
                     DB::beginTransaction();
                     $value = $this->setNewValue($request);
                     $new->update($value);
                     DB::commit();
                     return redirect()->route('news')->withErrors("");
-                } catch (\Exception $e) {
-                    DB::rollback();
-                    return redirect()->route('new_edit', $id)->withErrors("");
-                }
+//                } catch (\Exception $e) {
+//                    DB::rollback();
+//                    return redirect()->route('new_edit', $id)->withErrors("");
+//                }
             }
         }
         $newCates = NewCategories::all();

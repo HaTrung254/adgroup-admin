@@ -8,5 +8,5 @@ class NewCategories extends Model
 {
     protected $table = 'new_categories';
     public $timestamps = false;
-    public $fillable = ['vn_title', 'en_title'];
+    public $fillable = ['vn_title', 'en_title', 'order','is_display'];
 }

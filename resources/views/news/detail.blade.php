@@ -15,17 +15,18 @@
             </div>
         @endif
 		<div class="form-group row">
-            <label for="is_display" class="col-sm-2 control-label">Hiển thị bài viết trên website</label>
+            <label for="is_display" class="col-sm-2 control-label">Hiển thị tin trên website</label>
             <div class="col-sm-10">
-                <input class="form-control" type="checkbox" id="is_display" name="is_display" @if(!empty($new->is_display)) checked @endif>
+                <input type="checkbox" id="is_display" name="is_display" @if(!empty($new->is_display)) checked @endif>
             </div>
         </div>
         <div class="form-group row">
             <label for="vn_title" class="col-sm-2 control-label">Danh mục</label>
             <div class="col-sm-10">
-                <select class="form-control" id="category_id" name="category_id">
+                <select class="form-control" id="category_id" name="category_id" required>
+                    <option value="">Chọn danh mục</option>
                     @foreach($newCates as $cate)
-                        <option value="{{ $cate->id }}">{{ $cate->vn_title }}</option>
+                        <option @if($cate->id == $new->category_id) selected @endif value="{{ $cate->id }}">{{ $cate->vn_title }}</option>
                     @endforeach
                 </select>
             </div>
@@ -62,8 +63,8 @@
         <div class="form-group row">
             <label for="release_at" class="col-sm-2 control-label">Ngày phát hành</label>
             <div class="col-sm-10">
-                <input class="form-control" type="number" id="release_at" name="release_at" placeholder="Ngày phát hành"
-                       value ="@getIfEmpty($new->release_at)">
+                <input class="form-control datepicker" type="text" id="release_at" name="release_at" placeholder="Ngày phát hành"
+                       value ="{{ !empty($new->release_at) ? date('d/m/Y', strtotime($new->release_at)) : date('d/m/Y') }}">
             </div>
         </div>
         <div class="form-group row">

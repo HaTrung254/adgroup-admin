@@ -15,11 +15,19 @@
             </div>
         @endif
         <div class="form-group row">
+            <label for="order" class="col-sm-2 control-label">Hiển thị trên website</label>
+            <div class="col-sm-10">
+                <input type="checkbox" id="is_display" name="is_display"
+                       @if(!empty($product->is_display)) checked @endif>
+            </div>
+        </div>
+        <div class="form-group row">
             <label for="vn_title" class="col-sm-2 control-label">Danh mục</label>
             <div class="col-sm-10">
-                <select class="form-control" id="category_id" name="category_id">
+                <select class="form-control" id="category_id" name="category_id" required>
+                    <option value="">Chọn danh mục</option>
                     @foreach($productCates as $cate)
-                        <option value="{{ $cate->id }}">{{ $cate->vn_title }}</option>
+                        <option @if($cate->id == $new->category_id) selected @endif value="{{ $cate->id }}">{{ $cate->vn_title }}</option>
                     @endforeach
                 </select>
             </div>
