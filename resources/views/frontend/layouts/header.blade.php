@@ -78,7 +78,7 @@
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                         @if(!empty($productCates))
                             @foreach($productCates as $item)
-                                <a class="dropdown-item" href="#">{{ $item->title }}</a>
+                                <a class="dropdown-item" href="{{ route('product_list', $item->id) }}">{{ $item->title }}</a>
                             @endforeach
                         @endif
                     </div>

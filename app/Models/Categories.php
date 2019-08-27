@@ -14,10 +14,15 @@ class Categories extends Model
 
     public static function getProductDisplay($langSession = 'vn')
     {
-        $selectTitle = $langSession == 'vn' ? "vn_title" : "en_title";
-        return static::select('id', DB::raw($selectTitle. ' as title'))
-            ->where('is_display', BaseHelper::DISPLAY_FLAG)
-            ->orderBy('order')
+        $selectTitle = $langSession == 'vn' ? "product_categories.vn_title" : "product_categories.en_title";
+        return static::select('product_categories.id', DB::raw($selectTitle. ' as title'),
+            DB::raw('COUNT(products.id) as product_count'))
+            ->join('products', function($join) {
+                $join->on('product_categories.id', '=', 'products.category_id');
+            })
+            ->where('product_categories.is_display', BaseHelper::DISPLAY_FLAG)
+            ->orderBy('product_categories.order')
+            ->groupBy(['product_categories.id', 'product_categories.en_title', 'product_categories.vn_title'])
             ->get();
     }
 

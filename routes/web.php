@@ -38,4 +38,5 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
 });
 
 Route::get('/', 'FrontendController@index')->name('homepage');
+Route::get('/category/{cate_id}', 'FrontendController@productList')->name('product_list');
 Route::get('/lang/{lang}', 'FrontendController@changeLanguage')->name('change_language');
