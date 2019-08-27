@@ -26,13 +26,17 @@ class Products extends Model
     public $fillable = ['vn_title', 'en_title', 'vn_content', 'en_content', 'price', 'image_url', 'type', 'is_display'];
 
     public static function scopeSelectWithLang($query, $lang){
-        return $query->select(DB::raw("{$lang}_title as title, price, image_url"));
+        return $query->select(DB::raw("{$lang}_title as title, price, image_url, category_id"));
     }
 
-    public static function getProducts($lang, $type = null, $limit = null)
+    public static function getProducts($lang, $type = null, $limit = null, $cate = null)
     {
         $query = static::selectWithLang($lang)
             ->where('is_display', BaseHelper::DISPLAY_FLAG);
+        if($cate != null){
+            $query = $query->where('category_id', $cate);
+        }
+
         if($type != null){
             $query = $query->where('type', $type);
         }
