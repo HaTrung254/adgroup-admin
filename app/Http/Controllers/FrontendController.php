@@ -25,9 +25,13 @@ class FrontendController
 
     public function index()
     {
-        $sliders = Sliders::getSliders($this->lang);
-        $noibatProduct = Products::getProducts($this->lang, Products::NOI_BAT, Products::LIMIT_PRODUCT);
-        $sancoProduct = Products::getProducts($this->lang, Products::SAN_CO, Products::LIMIT_PRODUCT);
+        $lang = BaseHelper::LANG_VN;
+        if(Session::has(BaseHelper::LANG_SESSION_NAME)) {
+            $lang = Session::get(BaseHelper::LANG_SESSION_NAME);
+        }
+        $sliders = Sliders::getSliders($lang);
+        $noibatProduct = Products::getProducts($lang, Products::NOI_BAT, Products::LIMIT_PRODUCT);
+        $sancoProduct = Products::getProducts($lang, Products::SAN_CO, Products::LIMIT_PRODUCT);
         return view('frontend.index', compact('sliders', 'noibatProduct', 'sancoProduct'));
     }
 
