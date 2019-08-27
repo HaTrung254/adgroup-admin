@@ -27,8 +27,8 @@ class FrontendController
     {
         $sliders = Sliders::getSliders($this->lang);
         $noibatProduct = Products::getProducts($this->lang, Products::NOI_BAT, Products::LIMIT_PRODUCT);
-
-        return view('frontend.index', compact('sliders', 'noibatProduct'));
+        $sancoProduct = Products::getProducts($this->lang, Products::SAN_CO, Products::LIMIT_PRODUCT);
+        return view('frontend.index', compact('sliders', 'noibatProduct', 'sancoProduct'));
     }
 
     public function changeLanguage($lang)

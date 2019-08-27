@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Helpers\BaseHelper;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Products extends Model
 {
@@ -25,7 +26,7 @@ class Products extends Model
     public $fillable = ['vn_title', 'en_title', 'vn_content', 'en_content', 'price', 'image_url', 'type', 'is_display'];
 
     public static function scopeSelectWithLang($query, $lang){
-        return $query->select("{$lang}_title as title, price, image_url");
+        return $query->select(DB::raw("{$lang}_title as title, price, image_url"));
     }
 
     public static function getProducts($lang, $type = null, $limit = null)
