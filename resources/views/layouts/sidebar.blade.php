@@ -26,31 +26,31 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
                     <a href="{{ route('sliders') }}" class="nav-link">
-                        <i class="nav-icon fa fas fa-circle-notch text-danger"></i>
+                        <i class="nav-icon fa fas fa-sliders text-danger"></i>
                         <p class="text">Slider</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('categories') }}" class="nav-link">
-                        <i class="nav-icon fa fas fa-circle-notch text-warning"></i>
+                        <i class="nav-icon fa fas fa-list text-warning"></i>
                         <p>Danh mục sản phẩm</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('products') }}" class="nav-link">
-                        <i class="nav-icon fa fas fa-circle-notch text-info"></i>
+                        <i class="nav-icon fa fas fa-archive text-warning"></i>
                         <p>Sản phẩm</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('new_categories') }}" class="nav-link">
-                        <i class="nav-icon fa fas fa-circle-notch"></i>
+                        <i class="nav-icon fa fas fa-list text-info"></i>
                         <p>Danh mục tin tức</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('news') }}" class="nav-link">
-                        <i class="nav-icon fa fas fa-circle-notch text-info"></i>
+                        <i class="nav-icon fa fas fa-newspaper-o text-info"></i>
                         <p>Tin tức</p>
                     </a>
                 </li>

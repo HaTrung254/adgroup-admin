@@ -27,7 +27,18 @@
                 <select class="form-control" id="category_id" name="category_id" required>
                     <option value="">Chọn danh mục</option>
                     @foreach($productCates as $cate)
-                        <option @if($cate->id == $new->category_id) selected @endif value="{{ $cate->id }}">{{ $cate->vn_title }}</option>
+                        <option @if(!empty($product->category_id) && $cate->id == $product->category_id) selected @endif value="{{ $cate->id }}">{{ $cate->vn_title }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="vn_title" class="col-sm-2 control-label">Loại sản phẩm</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="type" name="type" required>
+                    <option value="">Loại sản phẩm</option>
+                    @foreach($productTypes as $key => $type)
+                        <option @if(!empty($product->type) && $product->type == $key) selected @endif value="{{ $key }}">{{ $type }}</option>
                     @endforeach
                 </select>
             </div>

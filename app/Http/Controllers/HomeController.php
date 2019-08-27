@@ -53,6 +53,8 @@ class HomeController extends Controller
                 $value = [
                     'vn_title' => $request->get('vn_title'),
                     'en_title' => $request->get('en_title'),
+                    'vn_sub_title' => $request->get('vn_sub_title'),
+                    'en_sub_title' => $request->get('en_sub_title'),
                     'vn_vertical_title' => $request->get('vn_vertical_title'),
                     'en_vertical_title' => $request->get('en_vertical_title'),
                     'vn_horizontal_title' => $request->get('vn_horizontal_title'),
@@ -157,6 +159,7 @@ class HomeController extends Controller
             'vn_content' => $request->get('vn_content'),
             'en_content' => $request->get('en_content'),
             'price' => $request->get('price'),
+            'type' => $request->get('type'),
             'is_display' => $request->get('is_display') == "on" ? 1 : 0
         ];
         if($request->hasFile('image_url')) {
@@ -184,7 +187,9 @@ class HomeController extends Controller
             }
         }
         $productCates = Categories::all();
-        return view('products.detail', ['productCates' => $productCates, 'navNumber' => static::PRODUCTS]);
+        $productTypes = Products::typeProductArr();
+        return view('products.detail', ['productCates' => $productCates, 'navNumber' => static::PRODUCTS,
+            'productTypes' => $productTypes]);
     }
 
     public function productEdit($id, Request $request){
@@ -205,7 +210,9 @@ class HomeController extends Controller
             }
         }
         $productCates = Categories::all();
-        return view('products.detail', ['product' => $product, 'productCates' => $productCates, 'navNumber' => static::PRODUCTS]);
+        $productTypes = Products::typeProductArr();
+        return view('products.detail', ['product' => $product, 'productCates' => $productCates, 'navNumber' => static::PRODUCTS,
+            'productTypes' => $productTypes]);
     }
 
     public function productDelete($id){
@@ -284,9 +291,8 @@ class HomeController extends Controller
             'vn_content' => $request->get('vn_content'),
             'en_content' => $request->get('en_content'),
             'is_display' => $request->get('is_display') == "on" ? 1 : 0,
-            'release_at' => $dateArr[2].'-'.$dateArr[0].'-'.$dateArr[1]
+            'release_at' => $dateArr[2].'-'.$dateArr[1].'-'.$dateArr[0]
         ];
-        dd($value);
         if($request->hasFile('image_url')) {
             $file = $request->file('image_url');
             $fileName = date('YmdHis') . "." . $file->getClientOriginalExtension();
@@ -320,16 +326,16 @@ class HomeController extends Controller
         $new = News::find($id);
         if($request->isMethod('POST')) {
             if($new) {
-//                try {
+                try {
                     DB::beginTransaction();
                     $value = $this->setNewValue($request);
                     $new->update($value);
                     DB::commit();
                     return redirect()->route('news')->withErrors("");
-//                } catch (\Exception $e) {
-//                    DB::rollback();
-//                    return redirect()->route('new_edit', $id)->withErrors("");
-//                }
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    return redirect()->route('new_edit', $id)->withErrors("");
+                }
             }
         }
         $newCates = NewCategories::all();

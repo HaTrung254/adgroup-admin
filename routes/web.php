@@ -2,7 +2,7 @@
 
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/', 'HomeController@sliders')->name('sliders');
     Route::match(['get', 'post'], '/slider-edit/{id}', 'HomeController@sliderEdit')->name('slider_edit');
    
@@ -33,6 +33,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::match(['get', 'post'], '/new-create', 'HomeController@newCreate')->name('new_create');
     Route::get('/new-delete/{id}', 'HomeController@newDelete')->name('new_delete');
     /** news - end **/
+
+    Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 });
 
-Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+Route::get('/', 'FrontendController@index')->name('homepage');
+Route::get('/lang/{lang}', 'FrontendController@changeLanguage')->name('change_language');
