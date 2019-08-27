@@ -5,6 +5,11 @@ namespace App\Helpers;
 
 class BaseHelper
 {
+    const DISPLAY_FLAG = 1;
+    const LANG_SESSION_NAME = 'lang';
+    const LANG_VN = 'vn';
+    const LANG_EN = 'en';
+
     public static function weekDayArr()
     {
         return [

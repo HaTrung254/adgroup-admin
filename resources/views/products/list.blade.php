@@ -8,7 +8,8 @@
         <tr>
             <th>Title</th>
             <th>Ảnh</th>
-            <th>Nội dung</th>
+            <th>Nhóm sản phẩm</th>
+            <th>Loại</th>
             <th>Giá</th>
             <th>Hiển thị trên website</th>
             <th><i class="fa fa-tasks" style=""></i></th>
@@ -19,7 +20,8 @@
             <tr>
                 <td>{!! $item->vn_title !!}</td>
                 <td><img style="width:200px;height: auto" src="{{ asset($item->image_url) }}" /></td>
-                <td>{!! $item->vn_content !!}</td>
+                <td>{{ \App\Models\Categories::getCateById($item->category_id)->vn_title }}</td>
+                <td>{{ \App\Models\Products::typeProductArr()[$item->type] }}</td>
                 <td>{{ number_format($item->price) }}</td>
                 <td>@isDisplay($item->is_display)</td>
                 <td>

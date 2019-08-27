@@ -26,7 +26,7 @@
                 <select class="form-control" id="category_id" name="category_id" required>
                     <option value="">Chọn danh mục</option>
                     @foreach($newCates as $cate)
-                        <option @if($cate->id == $new->category_id) selected @endif value="{{ $cate->id }}">{{ $cate->vn_title }}</option>
+                        <option @if(!empty($new->category_id) && $cate->id == $new->category_id) selected @endif value="{{ $cate->id }}">{{ $cate->vn_title }}</option>
                     @endforeach
                 </select>
             </div>

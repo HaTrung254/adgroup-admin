@@ -15,13 +15,27 @@
         <div class="form-group row">
             <label for="vn_title" class="col-sm-2 control-label">Title</label>
             <div class="col-sm-10">
-                <textarea class="textarea form-control" id="vn_title" name="vn_title" placeholder="Title">{!! $slider->vn_title !!}</textarea>
+                <input class="form-control" id="vn_title" name="vn_title" placeholder="Title" value="{{ $slider->vn_title }}">
             </div>
         </div>
         <div class="form-group row">
             <label for="en_title" class="col-sm-2 control-label">Title (EN)</label>
             <div class="col-sm-10">
-                <textarea class="textarea form-control" id="en_title" name="en_title" placeholder="Title (EN)">{!! $slider->en_title !!}</textarea>
+                <input class="form-control" id="en_title" name="en_title" placeholder="Title (EN)" value="{{ $slider->en_title }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="vn_sub_title" class="col-sm-2 control-label">Từ khóa</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="vn_sub_title" name="vn_sub_title" placeholder="Từ khóa"
+                       value="{{ $slider->vn_sub_title }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="en_sub_title" class="col-sm-2 control-label">Từ khóa (EN)</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="en_sub_title" name="en_sub_title" placeholder="Từ khóa (EN)"
+                value="{{ $slider->en_sub_title }}">
             </div>
         </div>
         <div class="form-group row">
