@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Helpers;
-
+use Illuminate\Support\Facades\Session;
 
 class BaseHelper
 {
@@ -29,6 +29,11 @@ class BaseHelper
         $enDay = date('D', strtotime($date));
         return $isEn ? $enDay . ", " . date('Y/m/d', strtotime($date)) :
             $weekDayArr[$enDay] . ", " . date('d/m/Y', strtotime($date));
+    }
+
+    public static function echoLang($expression){
+        $language = Session::get(BaseHelper::LANG_SESSION_NAME);
+        return app('translator')->getFromJson($expression, [], $language);
     }
 
 }

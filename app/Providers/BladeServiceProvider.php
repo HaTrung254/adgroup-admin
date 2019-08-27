@@ -6,7 +6,6 @@ namespace App\Providers;
 use App\Helpers\BaseHelper;
 use Carbon\Laravel\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Session;
 
 class BladeServiceProvider extends ServiceProvider
 {
@@ -47,11 +46,8 @@ class BladeServiceProvider extends ServiceProvider
             return "<?php echo \App\Helpers\BaseHelper::dateTimeFormat($expression); ?>";
         });
 
-        view()->composer('*', function ($view) {
-            $language = Session::get(BaseHelper::LANG_SESSION_NAME);
-            Blade::directive('trans', function ($expression) use($language) {
-                return "<?php echo trans($expression, [], $language); ?>";
-            });
+        Blade::directive('trans', function ($expression) {
+            return "<?php echo \App\Helpers\BaseHelper::echoLang($expression) ?>";
         });
     }
 

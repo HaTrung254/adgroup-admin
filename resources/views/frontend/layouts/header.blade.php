@@ -71,10 +71,10 @@
         </button>
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a href="#" class="nav-link">{{ __('title.trangchu') }}</a></li>
+                <li class="nav-item active"><a href="#" class="nav-link">@trans('title.trangchu')</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">{{ __('title.sanpham') }}</a>
+                       aria-haspopup="true" aria-expanded="false">@trans('title.sanpham')</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                         @if(!empty($productCates))
                             @foreach($productCates as $item)
@@ -85,15 +85,15 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="shop.html" id="dropdown04" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">{{ __('title.gioithieu') }}</a>
+                       aria-haspopup="true" aria-expanded="false">@trans('title.gioithieu')</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                         <a class="dropdown-item" href="#">Công Ty</a>
                         <a class="dropdown-item" href="#">Nhà Sản Xuất</a>
                         <a class="dropdown-item" href="#">Khách Hàng</a>
                     </div>
                 </li>
-                <li class="nav-item"><a href="#" class="nav-link">{{ __('title.tintuc') }}</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">{{ __('title.lienhe') }}</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">@trans('title.tintuc')</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">@trans('title.lienhe')</a></li>
             </ul>
         </div>
     </div>
