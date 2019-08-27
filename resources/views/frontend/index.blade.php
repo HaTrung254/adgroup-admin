@@ -60,17 +60,6 @@
                     </a>
                 </div>
                 @endforeach
-                {{--<div class="card">--}}
-                    {{--<a href="#">--}}
-                        {{--<img src="@asset('/front-end/images/sem.jpg')" alt="" class="card-img-top">--}}
-                        {{--<div class="card-body">--}}
-                            {{--<h5 class="card-title" style="text-align: center"> <strong> Prisma e SEM </strong></h5>--}}
-                            {{--<p class="card-text">Ảnh ở chế độ chân không cao : 3nm - 8 nm</p>--}}
-                            {{--<p class="card-text text-black">Giá bán: 1đ</p>--}}
-                            {{--<a href="" class="card-link btn btn-primary center">Liên Hệ Ngay</a>--}}
-                        {{--</div>--}}
-                    {{--</a>--}}
-                {{--</div>--}}
             </div>
             <h4 class="center text-white"><a href="">Xem tất cả &#8594</a></h4>
         </div>
@@ -91,61 +80,19 @@
         </div>
         <div class="container">
             <div class="owl-carousel owl-theme prd-slider">
-                <div class="card">
-                    <a href="#">
-                        <img src="images/sem.jpg" alt="" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title" style="text-align: center"> <strong> Prisma e SEM </strong></h5>
-                            <p class="card-text">Ảnh ở chế độ chân không cao : 3nm - 8 nm</p>
-                            <p class="card-text text-black">Giá bán: 1đ</p>
-                            <a href="" class="card-link btn btn-primary center">Liên Hệ Ngay</a>
-                        </div>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <img src="images/sem.jpg" alt="" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title" style="text-align: center"> <strong> Prisma e SEM </strong></h5>
-                            <p class="card-text">Ảnh ở chế độ chân không cao : 3nm - 8 nm</p>
-                            <p class="card-text text-black">Giá bán: 1đ</p>
-                            <a href="" class="card-link btn btn-primary center">Liên Hệ Ngay</a>
-                        </div>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <img src="images/sem.jpg" alt="" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title" style="text-align: center"> <strong> Prisma e SEM </strong></h5>
-                            <p class="card-text">Ảnh ở chế độ chân không cao : 3nm - 8 nm</p>
-                            <p class="card-text text-black">Giá bán: 1đ</p>
-                            <a href="" class="card-link btn btn-primary center">Liên Hệ Ngay</a>
-                        </div>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <img src="images/sem.jpg" alt="" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title" style="text-align: center"> <strong> Prisma e SEM </strong></h5>
-                            <p class="card-text">Ảnh ở chế độ chân không cao : 3nm - 8 nm</p>
-                            <p class="card-text text-black">Giá bán: 1đ</p>
-                            <a href="" class="card-link btn btn-primary center">Liên Hệ Ngay</a>
-                        </div>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="#">
-                        <img src="images/sem.jpg" alt="" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title" style="text-align: center"> <strong> Prisma e SEM </strong></h5>
-                            <p class="card-text">Ảnh ở chế độ chân không cao : 3nm - 8 nm</p>
-                            <p class="card-text text-black">Giá bán: 1đ</p>
-                            <a href="" class="card-link btn btn-primary center">Liên Hệ Ngay</a>
-                        </div>
-                    </a>
-                </div>
+                @foreach($sancoProduct as $product)
+                    <div class="card">
+                        <a href="#">
+                            <img src="@asset('/'.$product->image_url)" alt="" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title" style="text-align: center"> <strong>{{ $product->title }}</strong></h5>
+                                <p class="card-text">Ảnh ở chế độ chân không cao : 3nm - 8 nm</p>
+                                <p class="card-text text-black">Giá bán: {{ !empty($product->price) ? number_format($product->price). "đ" : "Liên hệ" }}</p>
+                                <a href="" class="card-link btn btn-primary center">Liên Hệ Ngay</a>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
             </div>
             <h4 class="center"><a href="">Xem tất cả &#8594</a></h4>
         </div>
