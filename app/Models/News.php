@@ -36,4 +36,11 @@ class News extends Model
 
         return $query->orderBy('release_at', 'desc')->get();
     }
+
+    public static function getDetail($lang, $id)
+    {
+        return static::select(DB::raw("id, {$lang}_content as content, {$lang}_title as title, image_url, category_id, release_at"))
+        ->where('id', $id)
+        ->first();
+    }
 }

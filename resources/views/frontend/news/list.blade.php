@@ -8,15 +8,15 @@
           	@foreach($news as $item)
             <div class="col-md-12 d-flex ftco-animate fadeInUp ftco-animated">
               <div class="blog-entry align-self-stretch d-md-flex">
-                <a href="blog-single.html" class="block-20" style="background-image: url(@asset('/'.$item->image_url));">
+                <a href="{{ route('new_detail', $item->id) }}" class="block-20" style="background-image: url(@asset('/'.$item->image_url));">
                 </a>
                 <div class="text d-block pl-md-4">
                   <div class="meta mb-3">
                     <div><span class="icon-calendar"></span> @dateFormat($item->release_at)</div>
                   </div>
-                  <h3 class="heading"><a href="#">{{ $item->title }}</a></h3>
-                  <p>{{ substr($item->content, 0, 100) }}...</p>
-                  <p><a href="blog-single.html" class="btn btn-primary py-2 px-3">Read more</a></p>
+                  <h3 class="heading"><a href="{{ route('new_detail', $item->id) }}">{{ $item->title }}</a></h3>
+                  <p>{{ substr(strip_tags($item->content), 0, 100) }}...</p>
+                  <p><a href="{{ route('new_detail', $item->id) }}" class="btn btn-primary py-2 px-3">Read more</a></p>
                 </div>
               </div>
             </div>

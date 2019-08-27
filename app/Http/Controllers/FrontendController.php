@@ -79,9 +79,10 @@ class FrontendController
     public function newDetail($id)
     {
         $lang = $this->getLang();
-        $product = Products::getDetail($lang, $id);
-        $lienquanProducts = Products::getProducts($lang, null, 4, $product->category_id, $product->id);
-        return view('frontend.products.detail', compact('product', 'lienquanProducts'));
+        $new = News::getDetail($lang, $id);
+        $newCates = NewCategories::getList($lang);
+        $recentCates = News::getNews($lang, null, 3, $new->category_id, $new->id);
+        return view('frontend.news.detail', compact('new', 'newCates', 'recentCates'));
     }
 
     public function changeLanguage($lang)
