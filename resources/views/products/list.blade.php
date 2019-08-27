@@ -3,12 +3,12 @@
     @if($errors->any())
         <span class="label label-success form-control"><i class="fa fa-check"></i> Cập nhật sản phẩm thành công</span>
     @endif
-    <table class="table table-hover">
+    <table class="table table-hover text-center">
         <thead>
         <tr>
-            <th>Title</th>
+            <th>Tên</th>
             <th>Ảnh</th>
-            <th>Nhóm sản phẩm</th>
+            <th>Nhóm</th>
             <th>Loại</th>
             <th>Giá</th>
             <th>Hiển thị trên website</th>
@@ -22,7 +22,7 @@
                 <td><img style="width:200px;height: auto" src="{{ asset($item->image_url) }}" /></td>
                 <td>{{ \App\Models\Categories::getCateById($item->category_id)->vn_title }}</td>
                 <td>{{ \App\Models\Products::typeProductArr()[$item->type] }}</td>
-                <td>{{ number_format($item->price) }}</td>
+                <td>{{ number_format($item->vn_price) }}</td>
                 <td>@isDisplay($item->is_display)</td>
                 <td>
                     <a href="{{ route('product_edit', $item->id) }}" class="btn btn-primary">

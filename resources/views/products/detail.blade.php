@@ -44,6 +44,13 @@
             </div>
         </div>
         <div class="form-group row">
+            <label for="brand" class="col-sm-2 control-label">Hãng sản xuất</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="brand" name="brand" placeholder="Hãng sản xuất" required
+                       value="@getIfEmpty($product->brand)">
+            </div>
+        </div>
+        <div class="form-group row">
             <label for="vn_title" class="col-sm-2 control-label">Title</label>
             <div class="col-sm-10">
                 <input class="form-control" id="vn_title" name="vn_title" placeholder="Title" required
@@ -55,6 +62,20 @@
             <div class="col-sm-10">
                 <input class="form-control" id="en_title" name="en_title" placeholder="Title (EN)" required
                        value="@getIfEmpty($product->en_title)">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="vn_description" class="col-sm-2 control-label">Mô tả</label>
+            <div class="col-sm-10">
+                <textarea class="textarea form-control" id="vn_description" name="vn_description" placeholder="Mô tả">
+                    @getIfEmpty($product->vn_description)</textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="en_description" class="col-sm-2 control-label">Mô tả (EN)</label>
+            <div class="col-sm-10">
+                <textarea class="textarea form-control" id="en_description" name="en_description" placeholder="Mô tả (EN)">
+                    @getIfEmpty($product->en_description)</textarea>
             </div>
         </div>
         <div class="form-group row">
@@ -73,16 +94,23 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="en_content" class="col-sm-2 control-label">Giá tiền</label>
+            <label for="vn_price" class="col-sm-2 control-label">Giá tiền (vnđ)</label>
             <div class="col-sm-10">
-                <input class="form-control" type="number" id="price" name="price" placeholder="Giá tiền"
-                       value ="@getIfEmpty($product->price)">
+                <input class="form-control" type="number" id="vn_price" name="vn_price" placeholder="Giá tiền"
+                       value ="@getIfEmpty($product->vn_price)">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="en_price" class="col-sm-2 control-label">Giá tiền ($)</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="number" id="en_price" name="en_price" placeholder="Giá tiền ($)"
+                       value ="@getIfEmpty($product->en_price)">
             </div>
         </div>
         <div class="form-group row">
             <label for="image_url" class="col-sm-2 control-label">Ảnh mới</label>
             <div class="col-sm-10">
-                <input type="file" class="form-control" id="image_url" name="image_url" placeholder="Ảnh">
+                <input type="file" class="form-control" id="image_url" name="image_url" placeholder="Ảnh" @if(empty($product->id)) required="" @endif>
             </div>
         </div>
         <div class="form-group row pull-right">

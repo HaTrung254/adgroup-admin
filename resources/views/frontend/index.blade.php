@@ -51,7 +51,7 @@
                 <div class="card">
                     <a href="#">
                         <img src="@asset('/'.$product->image_url)" alt="" class="card-img-top">
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             <h5 class="card-title" style="text-align: center"> <strong>{{ $product->title }}</strong></h5>
                             <p class="card-text">Ảnh ở chế độ chân không cao : 3nm - 8 nm</p>
                             <p class="card-text text-black">Giá bán: {{ !empty($product->price) ? number_format($product->price). "đ" : "Liên hệ" }}</p>
@@ -61,7 +61,7 @@
                 </div>
                 @endforeach
             </div>
-            <h4 class="center text-white"><a href="">Xem tất cả &#8594</a></h4>
+            <h4 class="center text-white"><a href="">@trans('title.xemtatca') &#8594</a></h4>
         </div>
     </section>
     <!-- end featured prroduct slider -->
@@ -71,10 +71,9 @@
         <div class="container">
             <div class="row justify-content-center mb-3 pb-3">
                 <div class="col-md-12 heading-section text-center ftco-animate">
-                    <h2 class="mb-4 text-white">Sản phẩm sẵn có</h2>
+                    <h2 class="mb-4 text-white">@trans('title.sanco')</h2>
 
-                    <p class="text-white">Những thiết bị hàng đầu phục vụ cho công tác nghiên cứu trong phòng thí
-                        nghiệm cũng như ứng dụng trong công nghiệp</p>
+                    <p class="text-white">@trans('title.sanco_description')</p>
                 </div>
             </div>
         </div>
@@ -84,9 +83,8 @@
                     <div class="card">
                         <a href="#">
                             <img src="@asset('/'.$product->image_url)" alt="" class="card-img-top">
-                            <div class="card-body">
+                            <div class="card-body text-center">
                                 <h5 class="card-title" style="text-align: center"> <strong>{{ $product->title }}</strong></h5>
-                                <p class="card-text">Ảnh ở chế độ chân không cao : 3nm - 8 nm</p>
                                 <p class="card-text text-black">Giá bán: {{ !empty($product->price) ? number_format($product->price). "đ" : "Liên hệ" }}</p>
                                 <a href="" class="card-link btn btn-primary center">Liên Hệ Ngay</a>
                             </div>
@@ -94,7 +92,7 @@
                     </div>
                 @endforeach
             </div>
-            <h4 class="center"><a href="">Xem tất cả &#8594</a></h4>
+            <h4 class="center"><a href="">@trans('title.xemtatca') &#8594</a></h4>
         </div>
     </section>
     <!-- end available prroduct slider -->
@@ -110,16 +108,11 @@
                     <div class="fit-image large-padding-content">
                         <div class="heading-section-bold mb-4 mt-md-5">
                             <div class="ml-md-0">
-                                <h2 class="mb-4">Giới thiệu về An Dương Group</h2>
+                                <h2 class="mb-4">@trans('title.gioithieuanduong')</h2>
                             </div>
                         </div>
                         <div class="pb-md-5">
-                            <p>But nothing the copy said could convince her and so it didn’t take long until a few
-                                insidious
-                                Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into
-                                their
-
-                                agency, where they abused her for their.</p>
+                            <p>@trans('title.gioithieuanduong_des')</p>
                             <div class="row ftco-services">
                                 <div class="col-lg-4 text-center d-flex align-self-stretch ftco-animate">
                                     <div class="media block-6 services">
@@ -127,10 +120,8 @@
                                             <span class="flaticon-002-recommended"></span>
                                         </div>
                                         <div class="media-body">
-                                            <h3 class="heading">Refund Policy</h3>
-                                            <p>Even the all-powerful Pointing has no control about the blind texts it is
-                                                an
-                                                almost unorthographic.</p>
+                                            <h3 class="heading">@trans('title.refund_policy')</h3>
+                                            <p>@trans('title.refund_des')</p>
                                         </div>
                                     </div>
                                 </div>
@@ -140,10 +131,8 @@
                                             <span class="flaticon-001-box"></span>
                                         </div>
                                         <div class="media-body">
-                                            <h3 class="heading">Premium Packaging</h3>
-                                            <p>Even the all-powerful Pointing has no control about the blind texts it is
-                                                an
-                                                almost unorthographic.</p>
+                                            <h3 class="heading">@trans('title.premium_packaging')</h3>
+                                            <p>@trans('title.premium_des')</p>
                                         </div>
                                     </div>
                                 </div>
@@ -153,10 +142,8 @@
                                             <span class="flaticon-003-medal"></span>
                                         </div>
                                         <div class="media-body">
-                                            <h3 class="heading">Superior Quality</h3>
-                                            <p>Even the all-powerful Pointing has no control about the blind texts it is
-                                                an
-                                                almost unorthographic.</p>
+                                            <h3 class="heading">@trans('title.superior_quality')</h3>
+                                            <p>@trans('title.superior_des')</p>
                                         </div>
                                     </div>
                                 </div>
@@ -173,7 +160,7 @@
     <section class="ftco-section ftco-no-pb ftco-no-pt">
         <br> <br>
         <div class="col-md-12 heading-section text-center ftco-animate">
-            <h2 class="mb-4">Các hãng đang đại diện</h2>
+            <h2 class="mb-4">@trans('title.hangdaidien')</h2>
         </div>
         <div class="logo-slider owl-carousel owl-theme js-logo-slider-height container">
             <div class="js-logo-slider-height"><img class="" src="@asset('/front-end/images/Eppendorf-Logo.png')" alt=""></div>

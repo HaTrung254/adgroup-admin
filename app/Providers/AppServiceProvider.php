@@ -19,7 +19,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         view()->composer('*', function ($view) {
-            $language = Session::get(BaseHelper::LANG_SESSION_NAME);
+            $language = BaseHelper::LANG_VN;
+            if(Session::has(BaseHelper::LANG_SESSION_NAME))
+                $language = Session::get(BaseHelper::LANG_SESSION_NAME);
+
             $productCates = Categories::getProductDisplay($language);
             view()->share('productCates', $productCates); 
         });

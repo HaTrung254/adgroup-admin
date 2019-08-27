@@ -53,9 +53,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <div class="card-header">
                                     <h3 class="card-title">{{ !empty($title) ? $title : "ADGROUP" }}</h3>
                                     @if(!empty($hasSearch))
-                                        <div class="card-tools">
+                                        <form action="{{ $routeSearch }}" method="get" class="card-tools">
                                             <div class="input-group input-group-sm">
-                                                <input type="text" name="table_search" class="form-control float-right"
+                                                <input type="text" name="key" class="form-control float-right" value="{{ $key }}"
                                                        placeholder="Tìm kiếm">
                                                 <div class="input-group-append">
                                                     <button type="submit" class="btn btn-default"><i class="fas fa-search"></i>
@@ -65,7 +65,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                     </a>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     @endif
                                 </div>
                                 <!-- /.card-header -->

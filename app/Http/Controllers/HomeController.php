@@ -84,10 +84,17 @@ class HomeController extends Controller
         return view('sliders.edit', ['slider' => $slider, 'title' => 'Sửa slider', 'navNumber' => static::SLIDERS]);
     }
 
-    public function categories(){
-        $cates = Categories::orderBy('order', 'desc')->paginate(15);
+    public function categories(Request $request){
+        $key = $request->get('key');
+        $cates = !empty($request->get('key')) ? 
+                Categories::where('vn_title', 'LIKE', "%{$key}%")
+                        ->orWhere('en_title', 'LIKE', "%{$key}%")
+                        ->orderBy('order', 'desc')->paginate(15) : 
+                Categories::orderBy('order', 'desc')->paginate(15);
+        $routeSearch = route('categories');
         return view('categories.list', ['cates' => $cates, 'hasSearch' => true, 
-            'routeCreate' => route('category_create'), 'navNumber' => static::CATEGORIES]);
+            'routeCreate' => route('category_create'), 'navNumber' => static::CATEGORIES, 
+            'routeSearch' => $routeSearch, 'key' => $key]);
     }
 
     public function setCategoryValue($request){
@@ -124,6 +131,12 @@ class HomeController extends Controller
                 try {
                     DB::beginTransaction();
                     $value = $this->setCategoryValue($request);
+
+                    if($value['is_display'] != $cate->is_display){
+                        $product = new Products();
+                        $product->where('category_id', $cate->id)->update(['is_display' => $value['is_display']]);  
+                    }
+                    
                     $cate->update($value);
                     DB::commit();
                     return redirect()->route('categories')->withErrors("");
@@ -136,19 +149,35 @@ class HomeController extends Controller
         return view('categories.detail', ['category' => $cate,'navNumber' => static::CATEGORIES]);
     }
 
-    public function cateDelete($id){
+    public function categoryDelete($id){
         $cate = Categories::find($id);
         if($cate != null) {
-            $cate->delete();
+            try {
+                DB::beginTransaction();
+                $cate->delete();
+                $product = new Products();
+                $product->where('category_id', $id)->delete();
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+            }
         }
 
         return redirect()->route('categories')->withErrors("");
     }
 
-    public function products(){
-        $products = Products::paginate(10);
+    public function products(Request $request){
+        $key = $request->get('key');
+        $products = !empty($request->get('key')) ? 
+                Products::where('vn_title', 'LIKE', "%{$key}%")
+                        ->orWhere('en_title', 'LIKE', "%{$key}%")
+                        ->orWhere('brand', 'LIKE', "%{$key}%")
+                        ->orderBy('id', 'desc')->paginate(10) : 
+                Products::orderBy('id', 'desc')->paginate(10);
+        $routeSearch = route('products');
         return view('products.list', ['products' => $products, 'hasSearch' => true,
-            'routeCreate' => route('product_create'), 'navNumber' => static::PRODUCTS]);
+            'routeCreate' => route('product_create'), 'navNumber' => static::PRODUCTS, 
+            'routeSearch' => $routeSearch, 'key' => $key]);
     }
 
     public function setProductValue($request){
@@ -156,9 +185,13 @@ class HomeController extends Controller
             'category_id' => $request->get('category_id'),
             'vn_title' => $request->get('vn_title'),
             'en_title' => $request->get('en_title'),
+            'vn_description' => $request->get('vn_description'),
+            'en_description' => $request->get('en_description'),
             'vn_content' => $request->get('vn_content'),
             'en_content' => $request->get('en_content'),
-            'price' => $request->get('price'),
+            'brand' => $request->get('brand'),
+            'vn_price' => $request->get('vn_price'),
+            'en_price' => $request->get('en_price'),
             'type' => $request->get('type'),
             'is_display' => $request->get('is_display') == "on" ? 1 : 0
         ];
@@ -224,10 +257,17 @@ class HomeController extends Controller
         return redirect()->route('products')->withErrors("");
     }
 
-    public function newCategories(){
-        $cates = NewCategories::orderBy('order', 'desc')->paginate(15);
+    public function newCategories(Request $request){
+        $key = $request->get('key');
+        $cates = !empty($request->get('key')) ? 
+                NewCategories::where('vn_title', 'LIKE', "%{$key}%")
+                        ->orWhere('en_title', 'LIKE', "%{$key}%")
+                        ->orderBy('order', 'desc')->paginate(15) : 
+                NewCategories::orderBy('order', 'desc')->paginate(15);
+        $routeSearch = route('new_categories');
         return view('newcategories.list', ['cates' => $cates, 'hasSearch' => true,
-            'routeCreate' => route('new_category_create'), 'navNumber' => static::NEW_CATEGORIES]);
+            'routeCreate' => route('new_category_create'), 'navNumber' => static::NEW_CATEGORIES,
+            'routeSearch' => $routeSearch, 'key' => $key]);
     }
 
     public function newCategoryCreate(Request $request){
@@ -255,7 +295,13 @@ class HomeController extends Controller
                 try {
                     DB::beginTransaction();
                     $value = $this->setCategoryValue($request);
+                    if($value['is_display'] != $cate->is_display){
+                        $new = new News();
+                        $new->where('category_id', $cate->id)->update(['is_display' => $value['is_display']]);  
+                    }
+                    
                     $cate->update($value);
+
                     DB::commit();
                     return redirect()->route('new_categories')->withErrors("");
                 } catch (\Exception $e) {
@@ -270,16 +316,30 @@ class HomeController extends Controller
     public function newCategoryDelete($id){
         $cate = NewCategories::find($id);
         if($cate != null) {
-            $cate->delete();
+            try {
+                DB::beginTransaction();
+                $cate->delete();
+                $new = new News();
+                $new->where('category_id', $id)->delete();
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+            }
         }
-
         return redirect()->route('new_categories')->withErrors("");
     }
 
-    public function news(){
-        $news = News::paginate(10);
+    public function news(Request $request){
+        $key = $request->get('key');
+        $news = !empty($request->get('key')) ? 
+                News::where('vn_title', 'LIKE', "%{$key}%")
+                        ->orWhere('en_title', 'LIKE', "%{$key}%")
+                        ->orderBy('release_at', 'desc')->paginate(10) : 
+                News::orderBy('release_at', 'desc')->paginate(10);
+        $routeSearch = route('news');
         return view('news.list', ['news' => $news, 'hasSearch' => true,
-            'routeCreate' => route('new_create'), 'navNumber' => static::NEWS]);
+            'routeCreate' => route('new_create'), 'navNumber' => static::NEWS, 
+            'routeSearch' => $routeSearch, 'key' => $key]);
     }
 
     public function setNewValue($request){

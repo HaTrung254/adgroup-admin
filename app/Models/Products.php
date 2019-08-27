@@ -23,15 +23,12 @@ class Products extends Model
         ];
     }
 
-    public $fillable = ['vn_title', 'en_title', 'vn_content', 'en_content', 'price', 'image_url', 'type', 'is_display'];
+    public $fillable = ['category_id', 'vn_title', 'en_title', 'vn_description', 'en_description', 'vn_content', 'en_content', 'brand', 'vn_price', 'en_price', 'image_url', 'type', 'is_display'];
 
-    public static function scopeSelectWithLang($query, $lang){
-        return $query->select(DB::raw("{$lang}_title as title, price, image_url, category_id"));
-    }
 
-    public static function getProducts($lang, $type = null, $limit = null, $cate = null)
+    public static function getProducts($lang, $type = null, $limit = null, $cate = null, $ignoreId = null)
     {
-        $query = static::selectWithLang($lang)
+        $query = static::select(DB::raw("id, {$lang}_title as title, image_url, {$lang}_price as price, category_id"))
             ->where('is_display', BaseHelper::DISPLAY_FLAG);
         if($cate != null){
             $query = $query->where('category_id', $cate);
@@ -41,11 +38,22 @@ class Products extends Model
             $query = $query->where('type', $type);
         }
 
+        if($ignoreId != null) {
+            $query = $query->where('id', '<>', $ignoreId);
+        }
+
         if ($limit != null) {
             $query = $query->limit($limit);
         }
 
         return $query->get();
+    }
+
+    public static function getDetail($lang, $id)
+    {
+        return static::select(DB::raw("id, {$lang}_content as content, {$lang}_title as title, {$lang}_price as price, image_url, category_id, {$lang}_description as description, brand"))
+        ->where('id', $id)
+        ->first();
     }
 
 }

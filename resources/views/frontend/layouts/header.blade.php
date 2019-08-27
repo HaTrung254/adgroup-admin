@@ -10,7 +10,7 @@
                         <span class="text">+84 2438612612</span>
                     </div>
                     <div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right">
-                        <span class="text">Công ty TNHH Thiết bị Khoa học Kỹ thuật An Dương</span>
+                        <span class="text">@trans('title.tencongty')</span>
                     </div>
                     <div class="col-md pr-4 d-flex topper align-items-center">
                         <div class="icon mr-2 d-flex justify-content-center align-items-center"><span
@@ -45,7 +45,7 @@
                     <!--end of col-->
                     <div class="col">
                         <input class="form-control form-control-lg form-control-borderless" type="search"
-                               placeholder="Nhập từ khóa tìm kiếm">
+                               placeholder="@trans('title.timkiem')">
                     </div>
                     <!--end of col-->
                     <div class="col-auto">
@@ -64,7 +64,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-        <img src="{{ asset('/front-end/images/logo.png') }}" class="navbar-brand" href="index.html"></img>
+        <a href="{{ route('homepage') }}"><img src="{{ asset('/front-end/images/logo.png') }}" class="navbar-brand" href="index.html"></img></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                 aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menu
@@ -87,12 +87,12 @@
                     <a class="nav-link dropdown-toggle" href="shop.html" id="dropdown04" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">@trans('title.gioithieu')</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
-                        <a class="dropdown-item" href="#">Công Ty</a>
-                        <a class="dropdown-item" href="#">Nhà Sản Xuất</a>
-                        <a class="dropdown-item" href="#">Khách Hàng</a>
+                        <a class="dropdown-item" href="#">@trans('title.congty')</a>
+                        <a class="dropdown-item" href="#">@trans('title.nsx')</a>
+                        <a class="dropdown-item" href="#">@trans('title.khach')</a>
                     </div>
                 </li>
-                <li class="nav-item"><a href="#" class="nav-link">@trans('title.tintuc')</a></li>
+                <li class="nav-item"><a href="{{ route('new_list') }}" class="nav-link">@trans('title.tintuc')</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">@trans('title.lienhe')</a></li>
             </ul>
         </div>

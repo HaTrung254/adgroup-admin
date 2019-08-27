@@ -28,14 +28,14 @@
             <label for="vn_sub_title" class="col-sm-2 control-label">Từ khóa</label>
             <div class="col-sm-10">
                 <input class="form-control" id="vn_sub_title" name="vn_sub_title" placeholder="Từ khóa"
-                       value="{{ $slider->vn_sub_title }}">
+                       value="{{ $slider->vn_sub_title }}" required="">
             </div>
         </div>
         <div class="form-group row">
             <label for="en_sub_title" class="col-sm-2 control-label">Từ khóa (EN)</label>
             <div class="col-sm-10">
                 <input class="form-control" id="en_sub_title" name="en_sub_title" placeholder="Từ khóa (EN)"
-                value="{{ $slider->en_sub_title }}">
+                value="{{ $slider->en_sub_title }}" required="">
             </div>
         </div>
         <div class="form-group row">
@@ -65,19 +65,19 @@
         <div class="form-group row">
             <label for="vn_content" class="col-sm-2 control-label">Nội dung</label>
             <div class="col-sm-10">
-                <textarea class="textarea form-control" id="vn_content" name="vn_content" placeholder="Nội dung">{!! $slider->vn_content !!}</textarea>
+                <textarea class="textarea form-control" id="vn_content" name="vn_content" placeholder="Nội dung" required="">{!! $slider->vn_content !!}</textarea>
             </div>
         </div>
         <div class="form-group row">
             <label for="en_content" class="col-sm-2 control-label">Nội dung (EN)</label>
             <div class="col-sm-10">
-                <textarea class="textarea form-control" id="en_content" name="en_content" placeholder="Nội dung (EN)">{!! $slider->en_content !!}</textarea>
+                <textarea class="textarea form-control" id="en_content" name="en_content" placeholder="Nội dung (EN)" required="">{!! $slider->en_content !!}</textarea>
             </div>
         </div>
         <div class="form-group row">
             <label for="image_url" class="col-sm-2 control-label">Ảnh mới</label>
             <div class="col-sm-10">
-                <input type="file" class="form-control" id="image_url" name="image_url" placeholder="Ảnh">
+                <input type="file" class="form-control" id="image_url" name="image_url" placeholder="Ảnh" @if(!empty($slider->image_url)) required="" @endif>
             </div>
         </div>
         <div class="form-group row pull-right">

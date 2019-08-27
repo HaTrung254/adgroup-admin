@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\BaseHelper;
+use App\Models\News;
+use App\Models\NewCategories;
 use App\Models\Products;
 use App\Models\Sliders;
 use Illuminate\Support\Facades\Session;
@@ -46,6 +48,40 @@ class FrontendController
         $lang = $this->getLang();
         $products = Products::getProducts($lang,null,null, $cateId);
         return view('frontend.products.list', compact('products'));
+    }
+
+    public function productDetail($id)
+    {
+        $lang = $this->getLang();
+        $product = Products::getDetail($lang, $id);
+        $lienquanProducts = Products::getProducts($lang, null, 4, $product->category_id, $product->id);
+        return view('frontend.products.detail', compact('product', 'lienquanProducts'));
+    }
+
+    public function newList()
+    {
+        $lang = $this->getLang();
+        $news = News::getNews($lang);
+        $newCates = NewCategories::getList($lang);
+        $recentCates = array_slice($news->toArray(), -3, 3, true);
+        return view('frontend.news.list', compact('news', 'newCates', 'recentCates'));
+    }
+
+    public function newCategoryList($id)
+    {
+        $lang = $this->getLang();
+        $news = News::getNews($lang,null,null,$id);
+        $newCates = NewCategories::getList($lang);
+        $recentCates = array_slice($news->toArray(), -3, 3, true);
+        return view('frontend.news.list', compact('news', 'newCates', 'recentCates'));
+    }
+
+    public function newDetail($id)
+    {
+        $lang = $this->getLang();
+        $product = Products::getDetail($lang, $id);
+        $lienquanProducts = Products::getProducts($lang, null, 4, $product->category_id, $product->id);
+        return view('frontend.products.detail', compact('product', 'lienquanProducts'));
     }
 
     public function changeLanguage($lang)

@@ -23,11 +23,14 @@ class BaseHelper
         ];
     }
 
-    public static function dateTimeFormat($date, $isEn = false)
+    public static function dateTimeFormat($date)
     {
         $weekDayArr = static::weekDayArr();
         $enDay = date('D', strtotime($date));
-        return $isEn ? $enDay . ", " . date('Y/m/d', strtotime($date)) :
+        $language = BaseHelper::LANG_VN;
+            if(Session::has(BaseHelper::LANG_SESSION_NAME))
+                $language = Session::get(BaseHelper::LANG_SESSION_NAME);
+        return $language == static::LANG_EN ? $enDay . ", " . date('d M Y', strtotime($date)) :
             $weekDayArr[$enDay] . ", " . date('d/m/Y', strtotime($date));
     }
 
