@@ -7,6 +7,8 @@ use App\Models\News;
 use App\Models\NewCategories;
 use App\Models\Products;
 use App\Models\Sliders;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class FrontendController
@@ -43,6 +45,15 @@ class FrontendController
         return view('frontend.index', compact('sliders', 'noibatProduct', 'sancoProduct'));
     }
 
+    public function productSearch(Request $request)
+    {
+        $lang = $this->getLang();
+        $keySearch = $request->get('key');
+        $where = !empty($keySearch) ? "({$lang}_title LIKE '%{$keySearch}%' or {$lang}_content LIKE '%{$keySearch}%')" : "";
+        $products = Products::getProducts($lang,null,null, null,null, $where);
+        return view('frontend.products.list', compact('products', 'keySearch'));
+    }
+
     public function productList($cateId)
     {
         $lang = $this->getLang();
@@ -58,13 +69,15 @@ class FrontendController
         return view('frontend.products.detail', compact('product', 'lienquanProducts'));
     }
 
-    public function newList()
+    public function newList(Request $request)
     {
         $lang = $this->getLang();
-        $news = News::getNews($lang);
+        $key = $request->get('key');
+        $where = !empty($key) ? "({$lang}_title LIKE '%{$key}%' or {$lang}_content LIKE '%{$key}%')" : "";
+        $news = News::getNews($lang,null,null,null,null, $where);
         $newCates = NewCategories::getList($lang);
         $recentCates = array_slice($news->toArray(), -3, 3, true);
-        return view('frontend.news.list', compact('news', 'newCates', 'recentCates'));
+        return view('frontend.news.list', compact('news', 'newCates', 'recentCates', 'key'));
     }
 
     public function newCategoryList($id)
@@ -83,6 +96,16 @@ class FrontendController
         $newCates = NewCategories::getList($lang);
         $recentCates = News::getNews($lang, null, 3, $new->category_id, $new->id);
         return view('frontend.news.detail', compact('new', 'newCates', 'recentCates'));
+    }
+
+    public function mailContact(Request $request)
+    {
+        $input = $request->all();
+        $mail = env('MAIL_USERNAME');
+        $title = BaseHelper::echoLang('title.mail_title');
+        Mail::send('frontend.mailTemplate', $input, function ($message) use ($mail, $title){
+            $message->to($mail, 'Visitor')->subject($title);
+        });
     }
 
     public function changeLanguage($lang)

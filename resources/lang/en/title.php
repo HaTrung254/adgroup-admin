@@ -44,4 +44,5 @@ return [
     'company_diachi' => '203 Fake St. Mountain View, San Francisco, California, USA',
     'recent_blog' => 'Recent Blog',
     'search_enter' => 'Type a keyword and hit enter',
+    'mail_title' => 'Mail contact',
 ];
