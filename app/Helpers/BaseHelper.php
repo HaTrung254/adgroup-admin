@@ -35,7 +35,9 @@ class BaseHelper
     }
 
     public static function echoLang($expression){
-        $language = Session::get(BaseHelper::LANG_SESSION_NAME);
+        $language = static::LANG_VN;
+        if(Session::has(BaseHelper::LANG_SESSION_NAME))
+            $language = Session::get(BaseHelper::LANG_SESSION_NAME);
         return app('translator')->getFromJson($expression, [], $language);
     }
 
