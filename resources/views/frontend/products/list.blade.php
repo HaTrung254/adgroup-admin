@@ -4,6 +4,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 ftco-animate fadeInUp ftco-animated">
+                    @if(!empty($keySearch))
+                        <span style="color: #423f3b">Hiển thị {{ count($products) }} kết quả tìm kiếm.</span>
+                    @endif
                     @foreach($products as $key => $item)
                         @if($key != 0 && $key != count($products) - 1 && $key % 3 == 0)
                             </div>
@@ -30,10 +33,11 @@
 
                 <div class="col-lg-4 sidebar ftco-animate fadeInUp ftco-animated">
                     <div class="sidebar-box">
-                        <form action="#" class="search-form">
+                        <form action="{{ route('product_search_list') }}" method="post" class="search-form">
+                            {{ csrf_field() }}
                             <div class="form-group">
                                 <span class="icon ion-ios-search"></span>
-                                <input type="text" class="form-control" placeholder="@trans('title.search_enter')">
+                                <input type="text" name="key" value="@if(!empty($keySearch)) {{ $keySearch }} @endif" class="form-control" placeholder="@trans('title.search_enter')">
                             </div>
                         </form>
                     </div>

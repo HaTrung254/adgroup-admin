@@ -26,7 +26,7 @@ class Products extends Model
     public $fillable = ['category_id', 'vn_title', 'en_title', 'vn_description', 'en_description', 'vn_content', 'en_content', 'brand', 'vn_price', 'en_price', 'image_url', 'type', 'is_display'];
 
 
-    public static function getProducts($lang, $type = null, $limit = null, $cate = null, $ignoreId = null)
+    public static function getProducts($lang, $type = null, $limit = null, $cate = null, $ignoreId = null, $where = '')
     {
         $query = static::select(DB::raw("id, {$lang}_title as title, image_url, {$lang}_price as price, category_id"))
             ->where('is_display', BaseHelper::DISPLAY_FLAG);
@@ -40,6 +40,10 @@ class Products extends Model
 
         if($ignoreId != null) {
             $query = $query->where('id', '<>', $ignoreId);
+        }
+
+        if($where != '') {
+            $query = $query->whereRaw($where);
         }
 
         if ($limit != null) {
