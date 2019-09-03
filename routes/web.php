@@ -50,3 +50,9 @@ Route::get('/new-{id}.html', 'FrontendController@newDetail')->name('new_detail')
 Route::get('/mail-contact', 'FrontendController@mailContact')->name('mail_contact');
 
 Route::get('/lang/{lang}', 'FrontendController@changeLanguage')->name('change_language');
+
+/*static pages*/
+
+Route::get('/about', 'PagesController@about')->name('about');
+
+/*end static pages*/

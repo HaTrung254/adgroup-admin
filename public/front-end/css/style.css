@@ -11069,78 +11069,27 @@ h5,
 }
 
 @media (max-width: 991.98px) {
-  .container {
-    width: 100%;
-    max-width: 100%;
-  }
-  
   .owl-carousel.home-slider .slider-item .slider-text h1 {
     color: #fff;
-    font-size: 40px;
+    font-size: 50px;
   }
-  
-  .owl-carousel .owl-item img {
-    width: 100%!important;
-    object-fit: cover;
-  }
-
-  .owl-carousel.home-slider .owl-dots{
-    bottom: 2px !important;
-  }
-
-  .owl-carousel.home-slider .slider-item .slider-text .one-forth {
-      background: rgba(0, 0, 0, .2);
-  }
-
-  .owl-carousel.home-slider .slider-item .slider-text .horizontal {
-      color: #fff;
-  }
-
-  .owl-carousel.home-slider .slider-item .slider-text h1 span {
-      font-weight: 600;
-      font-size: inherit;
-  }
-
-  .owl-carousel.home-slider .slider-item .slider-text .subheading {
-      font-size: 16px;
-  }
-
-  .owl-carousel.home-slider .slider-item .slider-text p {
-      color: #fff;
-      width: 60%;
-      margin: auto;
-  }
-
-  .owl-carousel.home-slider .slider-item .slider-text .one-forth .text {
-      margin-top: -18px;
-  }
-
-  .owl-carousel.home-slider .slider-item .slider-text p a {
-      margin-top: 25px!important;
-      padding: 10px 30px!important;
-}
 }
 
 @media (max-width: 767.98px) {
   .owl-carousel.home-slider .slider-item .slider-text h1 {
-    font-size: 25px;
-  }
-
-  .owl-carousel.home-slider .slider-item .slider-text p {
-    font-size: 10px;
+    font-size: 40px;
   }
 }
 
 .owl-carousel.home-slider .slider-item .slider-text p {
   color: rgba(0, 0, 0, 0.8);
   font-weight: 400;
-  width: 80%;
 }
 
 @media (max-width: 991.98px) {
   .owl-carousel.home-slider .slider-item .slider-text p {
     color: rgba(255, 255, 255, 0.7);
-    font-size: 15px;
+    font-size: 23px;
   }
 }
 
@@ -11239,18 +11188,6 @@ h5,
   .owl-carousel.home-slider .owl-dots {
     bottom: 5px;
   }
-}
-
-@media (max-width: 375px) {
-    .owl-carousel.home-slider .slider-item .slider-text h1 {
-          font-size: 25px;
-    }
-    .owl-carousel.home-slider .slider-item .slider-text p {
-      font-size: 13px;
-    }
-    .owl-carousel.home-slider .slider-item .slider-text .subheading {
-      font-size: 11px;
-    }
 }
 
 .owl-carousel.home-slider .owl-dots .owl-dot {
@@ -13304,5 +13241,9 @@ textarea.form-control {
 
 .more-information input {
   height: 300px;
+}
+
+.top-banner {
+  width: 100%;
 }
 /*# sourceMappingURL=style.css.map */
