@@ -34,7 +34,7 @@ return [
     'superior_quality' => 'SUPERIOR QUALITY',
     'superior_des' => 'Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.',
     'hangdaidien' => 'Các hãng đang đại diện',
-    'xemtatca' => 'Xem tất cả',
+    'xemtatca' => 'All items',
     'shipping_information' => 'Shipping Information',
     'returns_exchange' => 'Returns & Exchange',
     'terms_conditions' => 'Terms & Conditions',
