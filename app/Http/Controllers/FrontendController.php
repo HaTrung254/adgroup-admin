@@ -8,7 +8,6 @@ use App\Models\NewCategories;
 use App\Models\Products;
 use App\Models\Sliders;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class FrontendController
