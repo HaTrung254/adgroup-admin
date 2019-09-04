@@ -98,16 +98,6 @@ class FrontendController
         return view('frontend.news.detail', compact('new', 'newCates', 'recentCates'));
     }
 
-    public function mailContact(Request $request)
-    {
-        $input = $request->all();
-        $mail = env('MAIL_USERNAME');
-        $title = BaseHelper::echoLang('title.mail_title');
-        Mail::send('frontend.mailTemplate', $input, function ($message) use ($mail, $title){
-            $message->to($mail, 'Visitor')->subject($title);
-        });
-    }
-
     public function changeLanguage($lang)
     {
         Session::put(BaseHelper::LANG_SESSION_NAME, $lang);
