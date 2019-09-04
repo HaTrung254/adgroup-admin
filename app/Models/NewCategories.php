@@ -12,7 +12,7 @@ class NewCategories extends Model
     public $timestamps = false;
     public $fillable = ['vn_title', 'en_title', 'order','is_display'];
 
-    public static function getList($langSession = 'vn')
+    public static function queryList($langSession = 'vn')
     {
         $selectTitle = $langSession == 'vn' ? "new_categories.vn_title" : "new_categories.en_title";
         return static::select('new_categories.id', DB::raw($selectTitle. ' as title'),
@@ -23,7 +23,11 @@ class NewCategories extends Model
             })
             ->where('new_categories.is_display', BaseHelper::DISPLAY_FLAG)
             ->orderBy('new_categories.order')
-            ->groupBy(['new_categories.id', 'new_categories.en_title', 'new_categories.vn_title'])
-            ->get();
+            ->groupBy(['new_categories.id', 'new_categories.en_title', 'new_categories.vn_title']);
+    }
+
+    public static function getList($langSession = 'vn')
+    {
+        return static::queryList($langSession)->get();
     }
 }

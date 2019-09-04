@@ -5,8 +5,8 @@
             <div class="row">
                 <div class="col-lg-8 ftco-animate fadeInUp ftco-animated">
                     <div class="row">
-                        @if($key != "")
-                            <span style="color: #423f3b">Hiển thị {{ count($news) }} kết quả tìm kiếm.</span>
+                        @if(!empty($key))
+                            <span style="color: #423f3b">@trans('title.find_1') {{ count($news) }} @trans('title.find_2_new')</span>
                         @endif
                         @foreach($news as $item)
                             <div class="col-md-12 d-flex ftco-animate fadeInUp ftco-animated">
@@ -30,6 +30,9 @@
                             </div>
                         @endforeach
                     </div>
+                    <div class="row front-pagination">
+                        {{ $news->links() }}
+                    </div>
                 </div> <!-- .col-md-8 -->
                 <div class="col-lg-4 sidebar ftco-animate fadeInUp ftco-animated">
                     <div class="sidebar-box">
@@ -37,7 +40,7 @@
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <span class="icon ion-ios-search"></span>
-                                <input type="text" name="key" class="form-control" value="{{ $key }}"
+                                <input type="text" name="key" class="form-control" value="{{ !empty($key) ? $key : "" }}"
                                        placeholder="@trans('title.search_enter')">
                             </div>
                         </form>

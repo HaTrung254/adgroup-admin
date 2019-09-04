@@ -5,7 +5,9 @@
             <div class="row">
                 <div class="col-lg-8 ftco-animate fadeInUp ftco-animated">
                     @if(!empty($keySearch))
-                        <span style="color: #423f3b">Hiển thị {{ count($products) }} kết quả tìm kiếm.</span>
+                        <span style="color: #423f3b">@trans('title.find_1') {{ count($products) }} @trans('title.find_2_product')</span>
+                    @elseif(count($products) == 0)
+                        <span style="color: #423f3b">@trans('title.update_product')</span>
                     @endif
                     @foreach($products as $key => $item)
                         @if($key != 0 && $key != count($products) - 1 && $key % 3 == 0)
@@ -29,9 +31,11 @@
                             </div>
                         @endif
                     @endforeach
-                </div>
-
-                <div class="col-lg-4 sidebar ftco-animate fadeInUp ftco-animated">
+                    <div class="row front-pagination">
+                        {{ $products->links() }}
+                    </div>
+            </div>
+            <div class="col-lg-4 sidebar ftco-animate fadeInUp ftco-animated">
                     <div class="sidebar-box">
                         <form action="{{ route('product_search_list') }}" method="post" class="search-form">
                             {{ csrf_field() }}
@@ -55,8 +59,6 @@
                         <p>@trans('title.company_des')</p>
                     </div>
                 </div>
-
-            </div>
         </div>
     </section>
 @endsection
