@@ -38,14 +38,14 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
 });
 
 Route::get('/', 'FrontendController@index')->name('homepage');
-Route::get('/products-{id}.html', 'FrontendController@productList')->name('product_list');
-Route::post('/products.html', 'FrontendController@productSearch')->name('product_search_list');
-Route::get('/product-{id}.html', 'FrontendController@productDetail')->name('product_detail');
+Route::get('/products-{id}', 'FrontendController@productList')->name('product_list');
+Route::post('/products', 'FrontendController@productSearch')->name('product_search_list');
+Route::get('/product-{id}', 'FrontendController@productDetail')->name('product_detail');
 
 Route::get('/', 'FrontendController@index')->name('homepage');
-Route::match(['get', 'post'], '/news.html', 'FrontendController@newList')->name('new_list');
-Route::get('/news-{id}.html', 'FrontendController@newCategoryList')->name('new_category_list');
-Route::get('/new-{id}.html', 'FrontendController@newDetail')->name('new_detail');
+Route::match(['get', 'post'], '/news', 'FrontendController@newList')->name('new_list');
+Route::get('/news-{id}', 'FrontendController@newCategoryList')->name('new_category_list');
+Route::get('/new-{id}', 'FrontendController@newDetail')->name('new_detail');
 
 Route::get('/lang/{lang}', 'FrontendController@changeLanguage')->name('change_language');
 
