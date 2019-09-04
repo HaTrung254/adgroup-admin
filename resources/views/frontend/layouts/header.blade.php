@@ -93,7 +93,7 @@
                     </div>
                 </li>
                 <li class="nav-item"><a href="{{ route('new_list') }}" class="nav-link">@trans('title.tintuc')</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">@trans('title.lienhe')</a></li>
+                <li class="nav-item"><a href="{{ route('about') }}" class="nav-link">@trans('title.lienhe')</a></li>
             </ul>
         </div>
     </div>

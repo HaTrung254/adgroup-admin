@@ -44,5 +44,8 @@ return [
     'company_diachi' => '203 Fake St. Mountain View, San Francisco, California, USA',
     'recent_blog' => 'Recent Blog',
     'search_enter' => 'Nhập từ khóa và ấn Enter',
-    'mail_title' => 'Mail liên hệ',
+    'mail_title' => 'Liên hệ',
+    'mail_success' => "Tin nhắn của bạn đã được gửi. Chúng tôi sẽ liên hệ trong thời gian sớm nhất. Xin cảm ơn!",
+    'mail_fail' => "Đã có lỗi xảy ra. Vui lòng thử lại!",
+    'send' => 'Gửi đi',
 ];

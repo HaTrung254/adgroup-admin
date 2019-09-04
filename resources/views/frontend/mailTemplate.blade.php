@@ -2,15 +2,15 @@
 <table style="font-size: 15px;">
     <tr>
         <td><label>- Họ tên:</label></td>
-        <td> {{ !empty($name) ? $name : "" }}</td>
+        <td> {{ !empty($hoten) ? $hoten : "" }}</td>
     </tr>
     <tr>
         <td><label>- Đơn vị công tác:</label></td>
-        <td> {{ !empty($comany) ? $comany : "" }}</td>
+        <td> {{ !empty($donvi) ? $donvi : "" }}</td>
     </tr>
     <tr>
         <td><label>- Số điện thoại:</label></td>
-        <td> {{ !empty($phone) ? $phone : "" }}</td>
+        <td> {{ !empty($sdt) ? $sdt : "" }}</td>
     </tr>
     <tr>
         <td><label>- Email:</label></td>
@@ -18,6 +18,6 @@
     </tr>
     <tr>
         <td><label>- Nội dung:</label></td>
-        <td> {{ !empty($content) ? $content : "" }}</td>
+        <td> {{ !empty($noidung) ? $noidung : "" }}</td>
     </tr>
 </table>
