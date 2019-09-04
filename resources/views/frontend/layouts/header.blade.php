@@ -72,7 +72,7 @@
         </button>
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a href="#" class="nav-link">@trans('title.trangchu')</a></li>
+                <li class="nav-item active"><a href="{{ route('homepage') }}" class="nav-link">@trans('title.trangchu')</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">@trans('title.sanpham')</a>

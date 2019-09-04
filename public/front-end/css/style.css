@@ -13246,4 +13246,19 @@ textarea.form-control {
 .top-banner {
   width: 100%;
 }
+
+.front-pagination {
+  float: right;
+  padding:10px;
+}
+
+.float-pagination .page-item.active .page-link {
+  background-color: #755841 !important;
+  border-color: #755841 !important;
+  color: #ffffff !important;
+}
+
+.float-pagination .page-link {
+  color: #755841 !important;
+}
 /*# sourceMappingURL=style.css.map */

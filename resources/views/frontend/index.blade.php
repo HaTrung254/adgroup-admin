@@ -22,7 +22,7 @@
                                         {{ $item->title }} <br><span>{{ $item->sub_title }}</span>
                                         </h1>
                                     <div style="max-height: 100px">{!! $item->content !!}</div>
-                                    <p><a href="#" class="btn btn-primary px-5 py-3 mt-3">Xem thêm</a></p>
+                                    <p><a href="#" class="btn btn-primary px-5 py-3 mt-3">@trans('title.read_more')</a></p>
                                 </div>
                             </div>
                         </div>
@@ -49,19 +49,19 @@
             <div class="owl-carousel owl-theme prd-slider">
                 @foreach($noibatProduct as $product)
                 <div class="card">
-                    <a href="#">
+                    <a href="{{ route('checkout', $product->id) }}">
                         <img src="@asset('/'.$product->image_url)" alt="" class="card-img-top">
                         <div class="card-body text-center">
                             <h5 class="card-title" style="text-align: center"> <strong>{{ $product->title }}</strong></h5>
                             <p class="card-text">Ảnh ở chế độ chân không cao : 3nm - 8 nm</p>
                             <p class="card-text text-black">Giá bán: {{ !empty($product->price) ? number_format($product->price). "đ" : "Liên hệ" }}</p>
-                            <a href="" class="card-link btn btn-primary center">Liên Hệ Ngay</a>
+                            <a href="{{ route('checkout', $product->id) }}" class="card-link btn btn-primary center">Liên Hệ Ngay</a>
                         </div>
                     </a>
                 </div>
                 @endforeach
             </div>
-            <h4 class="center text-white"><a href="">@trans('title.xemtatca') &#8594</a></h4>
+            <h4 class="center text-white"><a href="{{ route('product_out_standing') }}">@trans('title.xemtatca') &#8594</a></h4>
         </div>
     </section>
     <!-- end featured prroduct slider -->
@@ -81,18 +81,18 @@
             <div class="owl-carousel owl-theme prd-slider">
                 @foreach($sancoProduct as $product)
                     <div class="card">
-                        <a href="#">
+                        <a href="{{ route('checkout', $product->id) }}">
                             <img src="@asset('/'.$product->image_url)" alt="" class="card-img-top">
                             <div class="card-body text-center">
                                 <h5 class="card-title" style="text-align: center"> <strong>{{ $product->title }}</strong></h5>
-                                <p class="card-text text-black">Giá bán: {{ !empty($product->price) ? number_format($product->price). "đ" : "Liên hệ" }}</p>
-                                <a href="" class="card-link btn btn-primary center">Liên Hệ Ngay</a>
+                                <p class="card-text text-black">@trans('title.price'): {{ !empty($product->price) ? number_format($product->price). "đ" : "Liên hệ" }}</p>
+                                <a href="{{ route('checkout', $product->id) }}" class="card-link btn btn-primary center">@trans('title.contact_now')</a>
                             </div>
                         </a>
                     </div>
                 @endforeach
             </div>
-            <h4 class="center"><a href="">@trans('title.xemtatca') &#8594</a></h4>
+            <h4 class="center"><a href="{{ route('product_available') }}">@trans('title.xemtatca') &#8594</a></h4>
         </div>
     </section>
     <!-- end available prroduct slider -->

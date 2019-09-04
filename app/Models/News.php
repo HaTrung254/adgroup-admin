@@ -12,7 +12,7 @@ class News extends Model
     public $timestamps = false;
     public $fillable = ['category_id', 'vn_title', 'en_title', 'vn_content', 'en_content', 'is_display', 'release_at', 'image_url'];
 
-    public static function getNews($lang, $type = null, $limit = null, $cate = null, $ignoreId = null, $where = null)
+    public static function queryNews($lang, $type = null, $limit = null, $cate = null, $ignoreId = null, $where = null)
     {
         $query = static::select(DB::raw("id, {$lang}_title as title, {$lang}_content as content, image_url, category_id, release_at"))
             ->where('is_display', BaseHelper::DISPLAY_FLAG);
@@ -38,7 +38,12 @@ class News extends Model
             $query = $query->limit($limit);
         }
 
-        return $query->orderBy('release_at', 'desc')->get();
+        return $query->orderBy('release_at', 'desc');
+    }
+
+    public static function getNews($lang, $type = null, $limit = null, $cate = null, $ignoreId = null, $where = null)
+    {
+        return static::queryNews($lang, $type, $limit, $cate, $ignoreId, $where)->get();
     }
 
     public static function getDetail($lang, $id)

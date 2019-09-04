@@ -49,14 +49,28 @@ class FrontendController
         $lang = $this->getLang();
         $keySearch = $request->get('key');
         $where = !empty($keySearch) ? "({$lang}_title LIKE '%{$keySearch}%' or {$lang}_content LIKE '%{$keySearch}%')" : "";
-        $products = Products::getProducts($lang,null,null, null,null, $where);
+        $products = Products::queryProduct($lang,null,null, null,null, $where)->paginate(12);
         return view('frontend.products.list', compact('products', 'keySearch'));
     }
 
     public function productList($cateId)
     {
         $lang = $this->getLang();
-        $products = Products::getProducts($lang,null,null, $cateId);
+        $products = Products::queryProduct($lang,null,null, $cateId)->paginate(12);
+        return view('frontend.products.list', compact('products'));
+    }
+
+    public function productOutStanding()
+    {
+        $lang = $this->getLang();
+        $products = Products::queryProduct($lang,Products::NOI_BAT)->paginate(12);
+        return view('frontend.products.list', compact('products'));
+    }
+
+    public function productAvailable()
+    {
+        $lang = $this->getLang();
+        $products = Products::queryProduct($lang,Products::SAN_CO)->paginate(12);
         return view('frontend.products.list', compact('products'));
     }
 
@@ -73,18 +87,18 @@ class FrontendController
         $lang = $this->getLang();
         $key = $request->get('key');
         $where = !empty($key) ? "({$lang}_title LIKE '%{$key}%' or {$lang}_content LIKE '%{$key}%')" : "";
-        $news = News::getNews($lang,null,null,null,null, $where);
+        $news = News::queryNews($lang,null,null,null,null, $where)->paginate(6);
         $newCates = NewCategories::getList($lang);
-        $recentCates = array_slice($news->toArray(), -3, 3, true);
+        $recentCates = array_slice($news->toArray()['data'], -3, 3, true);
         return view('frontend.news.list', compact('news', 'newCates', 'recentCates', 'key'));
     }
 
     public function newCategoryList($id)
     {
         $lang = $this->getLang();
-        $news = News::getNews($lang,null,null,$id);
+        $news = News::queryNews($lang,null,null,$id)->paginate(6);
         $newCates = NewCategories::getList($lang);
-        $recentCates = array_slice($news->toArray(), -3, 3, true);
+        $recentCates = array_slice($news->toArray()['data'], -3, 3, true);
         return view('frontend.news.list', compact('news', 'newCates', 'recentCates'));
     }
 

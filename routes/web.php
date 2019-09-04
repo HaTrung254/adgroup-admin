@@ -41,6 +41,8 @@ Route::get('/', 'FrontendController@index')->name('homepage');
 Route::get('/products-{id}.html', 'FrontendController@productList')->name('product_list');
 Route::post('/products.html', 'FrontendController@productSearch')->name('product_search_list');
 Route::get('/product-{id}.html', 'FrontendController@productDetail')->name('product_detail');
+Route::get('/featured-products', 'FrontendController@productOutStanding')->name('product_out_standing');
+Route::get('/available-products', 'FrontendController@productAvailable')->name('product_available');
 
 Route::get('/', 'FrontendController@index')->name('homepage');
 Route::match(['get', 'post'], '/news.html', 'FrontendController@newList')->name('new_list');
@@ -52,6 +54,8 @@ Route::get('/lang/{lang}', 'FrontendController@changeLanguage')->name('change_la
 /*static pages*/
 
 Route::get('/about.html', 'PagesController@about')->name('about');
-Route::post('/about', 'PagesController@mailContact')->name('mail_contact');
+Route::post('/mail-contact', 'PagesController@mailContact')->name('mail_contact');
+Route::post('/checkout-post', 'PagesController@checkoutPost')->name('checkout_post');
+Route::get('/checkout/{product_id}', 'PagesController@checkout')->name('checkout');
 
 /*end static pages*/

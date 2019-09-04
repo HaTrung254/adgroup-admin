@@ -4,6 +4,12 @@
         <td><label>- Họ tên:</label></td>
         <td> {{ !empty($hoten) ? $hoten : "" }}</td>
     </tr>
+    @if(!empty($sanpham))
+    <tr>
+        <td><label>- Sản phẩm:</label></td>
+        <td> {{ $sanpham }}</td>
+    </tr>
+    @endif
     <tr>
         <td><label>- Đơn vị công tác:</label></td>
         <td> {{ !empty($donvi) ? $donvi : "" }}</td>
