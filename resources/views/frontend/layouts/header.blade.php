@@ -36,7 +36,8 @@
 <div class="container">
     <div class="row justify-content-end">
         <div class="col-12 col-md-10 col-lg-8 search-bar">
-            <form class="card card-sm">
+            <form method="post" action="{{ route('product_search_list') }}" class="card card-sm">
+                {{ csrf_field() }}
                 <div class="card-body row no-gutters align-items-center">
                     <div class="col-auto">
                         <!-- <i class="fas fa-search h4 text-body"></i> -->
@@ -44,7 +45,7 @@
                     </div>
                     <!--end of col-->
                     <div class="col">
-                        <input class="form-control form-control-lg form-control-borderless" type="search"
+                        <input name="key" class="form-control form-control-lg form-control-borderless" type="search"
                                placeholder="@trans('title.timkiem')">
                     </div>
                     <!--end of col-->

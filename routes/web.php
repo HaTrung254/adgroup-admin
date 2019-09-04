@@ -51,7 +51,7 @@ Route::get('/lang/{lang}', 'FrontendController@changeLanguage')->name('change_la
 
 /*static pages*/
 
-Route::get('/about', 'PagesController@about')->name('about');
+Route::get('/about.html', 'PagesController@about')->name('about');
 Route::post('/about', 'PagesController@mailContact')->name('mail_contact');
 
 /*end static pages*/
