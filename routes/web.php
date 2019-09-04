@@ -47,12 +47,11 @@ Route::match(['get', 'post'], '/news.html', 'FrontendController@newList')->name(
 Route::get('/news-{id}.html', 'FrontendController@newCategoryList')->name('new_category_list');
 Route::get('/new-{id}.html', 'FrontendController@newDetail')->name('new_detail');
 
-Route::get('/mail-contact', 'FrontendController@mailContact')->name('mail_contact');
-
 Route::get('/lang/{lang}', 'FrontendController@changeLanguage')->name('change_language');
 
 /*static pages*/
 
 Route::get('/about', 'PagesController@about')->name('about');
+Route::post('/about', 'PagesController@mailContact')->name('mail_contact');
 
 /*end static pages*/
