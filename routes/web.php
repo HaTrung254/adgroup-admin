@@ -1,5 +1,4 @@
 <?php
-
 Auth::routes();
 
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
@@ -39,15 +38,28 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
 
 Route::get('/', 'FrontendController@index')->name('homepage');
 
-Route::get('/products-{id}', 'FrontendController@productList')->name('product_list');
-Route::post('/products', 'FrontendController@productSearch')->name('product_search_list');
-Route::get('/product-{id}', 'FrontendController@productDetail')->name('product_detail');
-Route::get('/featured-products', 'FrontendController@productOutStanding')->name('product_out_standing');
-Route::get('/available-products', 'FrontendController@productAvailable')->name('product_available');
+/** san-pham start **/
+Route::match(['get', 'post'], '/san-pham', 'FrontendController@productSearch')->name('vn_product_list');
+Route::match(['get', 'post'], '/products', 'FrontendController@productSearch')->name('en_product_list');
+Route::get('/san-pham/{cate_url}', 'FrontendController@productCateList')->name('vn_product_cate_list');
+Route::get('/products/{cate_url}', 'FrontendController@productCateList')->name('en_product_cate_list');
+Route::get('/san-pham/{cate_url}/{product_url}', 'FrontendController@productDetail')->name('vn_product_detail');
+Route::get('/products/{cate_url}/{product_url}', 'FrontendController@productDetail')->name('en_product_detail');
 
-Route::match(['get', 'post'], '/news', 'FrontendController@newList')->name('new_list');
-Route::get('/news-{id}', 'FrontendController@newCategoryList')->name('new_category_list');
+Route::get('/san-pham-noi-bat', 'FrontendController@productOutStanding')->name('vn_product_out_standing');
+Route::get('/featured-products', 'FrontendController@productOutStanding')->name('en_product_out_standing');
+
+Route::get('/san-pham-san-co', 'FrontendController@productAvailable')->name('vn_product_available');
+Route::get('/available-products', 'FrontendController@productAvailable')->name('en_product_available');
+/** san-pham end **/
+
+/** tin-tuc start **/
+Route::match(['get', 'post'], '/tin-tuc', 'FrontendController@newList')->name('vn_new_list');
+Route::match(['get', 'post'], '/news', 'FrontendController@newList')->name('en_new_list');
+Route::get('/tin-tuc/{url}', 'FrontendController@newCategoryList')->name('vn_new_category_list');
+Route::get('/news/{url}', 'FrontendController@newCategoryList')->name('en_new_category_list');
 Route::get('/new-{id}', 'FrontendController@newDetail')->name('new_detail');
+/** tin-tuc end **/
 
 Route::get('/lang/{lang}', 'FrontendController@changeLanguage')->name('change_language');
 

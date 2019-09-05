@@ -36,7 +36,7 @@
 <div class="container">
     <div class="row justify-content-end">
         <div class="col-12 col-md-10 col-lg-8 search-bar">
-            <form method="post" action="{{ route('product_search_list') }}" class="card card-sm">
+            <form method="post" action="{{ routeLang('product_list') }}" class="card card-sm">
                 {{ csrf_field() }}
                 <div class="card-body row no-gutters align-items-center">
                     <div class="col-auto">
@@ -77,9 +77,10 @@
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">@trans('title.sanpham')</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
+                         <a class="dropdown-item" href="{{ routeLang('product_list') }}">@trans('title.all')</a>
                         @if(!empty($productCates))
                             @foreach($productCates as $item)
-                                <a class="dropdown-item" href="{{ route('product_list', $item->id) }}">{{ $item->title }}</a>
+                                <a class="dropdown-item" href="{{ routeLangWithParams('product_cate_list', $item->url) }}">{{ $item->title }}</a>
                             @endforeach
                         @endif
                     </div>
@@ -93,7 +94,7 @@
                         <a class="dropdown-item" href="#">@trans('title.khach')</a>
                     </div>
                 </li>
-                <li class="nav-item"><a href="{{ route('new_list') }}" class="nav-link">@trans('title.tintuc')</a></li>
+                <li class="nav-item"><a href="{{ routeLang('new_list') }}" class="nav-link">@trans('title.tintuc')</a></li>
                 <li class="nav-item"><a href="{{ route('about') }}" class="nav-link">@trans('title.lienhe')</a></li>
             </ul>
         </div>

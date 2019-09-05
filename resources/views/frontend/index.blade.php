@@ -61,7 +61,7 @@
                 </div>
                 @endforeach
             </div>
-            <h4 class="center text-white"><a href="{{ route('product_out_standing') }}">@trans('title.xemtatca') &#8594</a></h4>
+            <h4 class="center text-white"><a href="{{ routeLang('product_out_standing') }}">@trans('title.xemtatca') &#8594</a></h4>
         </div>
     </section>
     <!-- end featured prroduct slider -->
@@ -92,7 +92,7 @@
                     </div>
                 @endforeach
             </div>
-            <h4 class="center"><a href="{{ route('product_available') }}">@trans('title.xemtatca') &#8594</a></h4>
+            <h4 class="center"><a href="{{ routeLang('product_available') }}">@trans('title.xemtatca') &#8594</a></h4>
         </div>
     </section>
     <!-- end available prroduct slider -->

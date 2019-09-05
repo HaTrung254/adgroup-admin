@@ -55,4 +55,6 @@ return [
     'find_1' => 'Tìm kiếm được',
     'find_2_product' => 'sản phẩm.',
     'find_2_new' => 'bài viết.',
+    'hangsx' => 'Hãng sản xuất',
+    'all' => 'Tất cả',
 ];

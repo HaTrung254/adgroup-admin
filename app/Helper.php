@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Session;
+
 if (!function_exists('classActivePath')) {
     function classActivePath($segment, $value)
     {
@@ -23,5 +25,21 @@ if (!function_exists('classActiveSegment')) {
             if(Request::segment($segment) == $v) return 'active';
         }
         return '';
+    }
+}
+
+if (!function_exists('routeLangWithParams')) {
+    function routeLangWithParams($route, $params)
+    {
+        $lang = Session::has('lang') ? Session::get('lang') : "vn";
+        return route($lang.'_'.$route, $params);
+    }
+}
+
+if (!function_exists('routeLang')) {
+    function routeLang($route)
+    {
+        $lang = Session::has('lang') ? Session::get('lang') : "vn";
+        return route($lang.'_'.$route);
     }
 }

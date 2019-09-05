@@ -17,7 +17,7 @@
                             <div class="row" style="margin-top: 30px">
                         @endif
                             <div class="col col-md-4">
-                                <a href="{{ route('product_detail', $item->id) }}">
+                                <a href="{{ routeLangWithParams('product_detail', [$item->cate_url, $item->url]) }}">
                                     <div class="card prd-card">
                                         <img src="@asset('/'. $item->image_url)" alt="" class="card-img-top">
                                         <div class="card-body">
@@ -37,7 +37,7 @@
             </div>
             <div class="col-lg-4 sidebar ftco-animate fadeInUp ftco-animated">
                     <div class="sidebar-box">
-                        <form action="{{ route('product_search_list') }}" method="post" class="search-form">
+                        <form action="{{ routeLang('product_list') }}" method="post" class="search-form">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <span class="icon ion-ios-search"></span>
@@ -49,7 +49,7 @@
                         <h3 class="heading"> <strong>@trans('title.danhmucsanpham')</strong></h3>
                         <ul class="categories">
                             @foreach($productCates as $item)
-                                <li><a href="{{ route('product_list', $item->id) }}">{{ $item->title }} <span>({{ $item->product_count }})</span></a></li>
+                                <li><a href="{{ routeLangWithParams('product_cate_list', $item->url) }}">{{ $item->title }} <span>({{ $item->product_count }})</span></a></li>
                             @endforeach
                         </ul>
                     </div>

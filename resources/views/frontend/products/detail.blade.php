@@ -8,8 +8,8 @@
 				</div>
 				<div class="col-lg-6 product-details pl-md-5 ftco-animate fadeInUp ftco-animated">
 					<h3>{{ $product->title }}</h3>
-					<h4>Hãng sản xuất: {{ $product->brand }}</h4>
-					<p>Giá bán: <b style="color: #0088cc;"> 
+					<h4>@trans('title.hangsx'): {{ $product->brand }}</h4>
+					<p>@trans('title.price'): <b style="color: #0088cc;"> 
 						@if(!empty($product->price))
 							{{ number_format($product->price) }} @trans('title.money')
 						@else

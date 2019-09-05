@@ -6,6 +6,7 @@ use App\Helpers\BaseHelper;
 use App\Models\News;
 use App\Models\NewCategories;
 use App\Models\Products;
+use App\Models\Categories;
 use App\Models\Sliders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -48,15 +49,15 @@ class FrontendController
     {
         $lang = $this->getLang();
         $keySearch = $request->get('key');
-        $where = !empty($keySearch) ? "({$lang}_title LIKE '%{$keySearch}%' or {$lang}_content LIKE '%{$keySearch}%')" : "";
+        $where = !empty($keySearch) ? "(products.{$lang}_title LIKE '%{$keySearch}%' or products.{$lang}_content LIKE '%{$keySearch}%')" : "";
         $products = Products::queryProduct($lang,null,null, null,null, $where)->paginate(12);
         return view('frontend.products.list', compact('products', 'keySearch'));
     }
 
-    public function productList($cateId)
+    public function productCateList($cateUrl)
     {
         $lang = $this->getLang();
-        $products = Products::queryProduct($lang,null,null, $cateId)->paginate(12);
+        $products = Products::queryProduct($lang,null,null, null,null, "(product_categories.en_url = '{$cateUrl}' or product_categories.vn_url = '{$cateUrl}')")->paginate(12);
         return view('frontend.products.list', compact('products'));
     }
 
@@ -74,11 +75,12 @@ class FrontendController
         return view('frontend.products.list', compact('products'));
     }
 
-    public function productDetail($id)
+    public function productDetail($cate_url, $product_url)
     {
         $lang = $this->getLang();
-        $product = Products::getDetail($lang, $id);
-        $lienquanProducts = Products::getProducts($lang, null, 4, $product->category_id, $product->id);
+        $product = Products::getDetailByUrl($lang, $product_url);
+        $category = Categories::getDetailByUrl($cate_url);
+        $lienquanProducts = Products::getProducts($lang, null, 4, $category->id, $product->id);
         return view('frontend.products.detail', compact('product', 'lienquanProducts'));
     }
 
@@ -93,10 +95,10 @@ class FrontendController
         return view('frontend.news.list', compact('news', 'newCates', 'recentCates', 'key'));
     }
 
-    public function newCategoryList($id)
+    public function newCategoryList($cateUrl)
     {
         $lang = $this->getLang();
-        $news = News::queryNews($lang,null,null,$id)->paginate(6);
+        $news = News::queryNews($lang,null,null,null,null, "(new_categories.en_url = '{$cateUrl}' or new_categories.vn_url = '{$cateUrl}')")->paginate(6);
         $newCates = NewCategories::getList($lang);
         $recentCates = array_slice($news->toArray()['data'], -3, 3, true);
         return view('frontend.news.list', compact('news', 'newCates', 'recentCates'));

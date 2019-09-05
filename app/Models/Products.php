@@ -23,23 +23,28 @@ class Products extends Model
         ];
     }
 
-    public $fillable = ['category_id', 'vn_title', 'en_title', 'vn_description', 'en_description', 'vn_content', 'en_content', 'brand', 'vn_price', 'en_price', 'image_url', 'type', 'is_display'];
+    public $fillable = ['category_id', 'vn_title', 'en_title', 'vn_description', 'en_description', 'vn_content', 'en_content', 'brand', 'vn_price', 'en_price', 'image_url', 'type', 'is_display', 'vn_url', 'en_url'];
 
 
     public static function queryProduct($lang, $type = null, $limit = null, $cate = null, $ignoreId = null, $where = '')
     {
-        $query = static::select(DB::raw("id, {$lang}_title as title, image_url, {$lang}_price as price, category_id"))
-            ->where('is_display', BaseHelper::DISPLAY_FLAG);
+        $query = static::select(DB::raw("products.id, products.{$lang}_title as title, products.image_url, products.{$lang}_price as price, products.category_id, products.{$lang}_url as url, product_categories.{$lang}_url as cate_url"))
+            ->leftJoin('product_categories', function($join) {
+                $join->on('product_categories.id', '=', 'products.category_id')
+                    ->where('new_categories.is_display', BaseHelper::DISPLAY_FLAG);
+            })
+            ->where('products.is_display', BaseHelper::DISPLAY_FLAG);
+
         if($cate != null){
-            $query = $query->where('category_id', $cate);
+            $query = $query->where('products.category_id', $cate);
         }
 
         if($type != null){
-            $query = $query->where('type', $type);
+            $query = $query->where('products.type', $type);
         }
 
         if($ignoreId != null) {
-            $query = $query->where('id', '<>', $ignoreId);
+            $query = $query->where('products.id', '<>', $ignoreId);
         }
 
         if($where != '') {
@@ -63,6 +68,22 @@ class Products extends Model
         return static::select(DB::raw("id, {$lang}_content as content, {$lang}_title as title, {$lang}_price as price, image_url, category_id, {$lang}_description as description, brand"))
         ->where('id', $id)
         ->first();
+    }
+
+    public static function getDetailByUrl($lang, $url)
+    {
+        return static::select(DB::raw("id, {$lang}_content as content, {$lang}_title as title, {$lang}_price as price, image_url, category_id, {$lang}_description as description, brand"))
+        ->where('vn_url', $url)->orWhere('en_url', $url)
+        ->first();
+    }
+
+    public static function checkExistDetailByUrl($vn_url, $en_url, $id = null)
+    {
+        $query = static::whereRaw("(vn_url = '{$vn_url}' OR en_url = '{$en_url}')");
+        if($id != null) {
+            $query = $query->where('id', '<>', $id);
+        }
+        return $query->exists();
     }
 
 }

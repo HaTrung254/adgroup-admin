@@ -36,7 +36,7 @@
                 </div> <!-- .col-md-8 -->
                 <div class="col-lg-4 sidebar ftco-animate fadeInUp ftco-animated">
                     <div class="sidebar-box">
-                        <form action="{{ route('new_list') }}" class="search-form" method="post">
+                        <form action="{{ routeLang('new_list') }}" class="search-form" method="post">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <span class="icon ion-ios-search"></span>
@@ -49,7 +49,7 @@
                         <h3 class="heading">@trans('title.danhmuc')</h3>
                         <ul class="categories">
                             @foreach($newCates as $item)
-                                <li><a href="{{ route('new_category_list', $item->id) }}">{{ $item->title }} <span>({{ $item->new_count }})</span></a>
+                                <li><a href="{{ routeLangWithParams('new_category_list', $item->url) }}">{{ $item->title }} <span>({{ $item->new_count }})</span></a>
                                 </li>
                             @endforeach
                         </ul>

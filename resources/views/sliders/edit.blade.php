@@ -77,7 +77,7 @@
         <div class="form-group row">
             <label for="image_url" class="col-sm-2 control-label">Ảnh mới</label>
             <div class="col-sm-10">
-                <input type="file" class="form-control" id="image_url" name="image_url" placeholder="Ảnh" @if(!empty($slider->image_url)) required="" @endif>
+                <input type="file" class="form-control" id="image_url" name="image_url" placeholder="Ảnh" @if(empty($slider->image_url)) required="" @endif>
             </div>
         </div>
         <div class="form-group row pull-right">

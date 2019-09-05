@@ -19,6 +19,7 @@ class HomeController extends Controller
     const PRODUCTS = 3;
     const NEW_CATEGORIES = 4;
     const NEWS = 5;
+    const ERROR_500 = "Có lỗi xảy ra. Vui lòng thử lại!";
     /**
      * Create a new controller instance.
      *
@@ -98,11 +99,19 @@ class HomeController extends Controller
     }
 
     public function setCategoryValue($request){
+        $vn_url = explode(' ', strtolower($request->get('vn_title')));
+        $vn_url = implode('-', $vn_url);
+
+        $en_url = explode(' ', strtolower($request->get('en_title')));
+        $en_url = implode('-', $en_url);
+
         return [
             'vn_title' => $request->get('vn_title'),
             'en_title' => $request->get('en_title'),
             'order' => $request->get('order'),
-            'is_display' => $request->get('is_display') == "on" ? 1 : 0
+            'is_display' => $request->get('is_display') == "on" ? 1 : 0,
+            'vn_url' => $vn_url,
+            'en_url' => $en_url,
         ];
     }
 
@@ -111,13 +120,15 @@ class HomeController extends Controller
             try{
                 DB::beginTransaction();
                 $value = $this->setCategoryValue($request);
-                $cate = new Categories();
-                $cate->insert($value);
+                if(Categories::checkExistDetailByUrl($value['vn_url'], $value['en_url'])) {
+                    return redirect()->route('category_create')->withErrors("Đã có danh mục này!");    
+                }
+                Categories::insert($value);
                 DB::commit();
                 return redirect()->route('categories')->withErrors("");
             } catch (\Exception $e) {
                 DB::rollback();
-                return redirect()->route('category_create')->withErrors("");
+                return redirect()->route('category_create')->withErrors(static::ERROR_500);
             }
         }
         return view('categories.detail', ['navNumber' => static::CATEGORIES]);
@@ -131,7 +142,9 @@ class HomeController extends Controller
                 try {
                     DB::beginTransaction();
                     $value = $this->setCategoryValue($request);
-
+                    if(Categories::checkExistDetailByUrl($value['vn_url'], $value['en_url'], $id)) {
+                        return redirect()->route('category_edit', $id)->withErrors("Đã có danh mục này!");
+                    }
                     if($value['is_display'] != $cate->is_display){
                         $product = new Products();
                         $product->where('category_id', $cate->id)->update(['is_display' => $value['is_display']]);  
@@ -142,7 +155,7 @@ class HomeController extends Controller
                     return redirect()->route('categories')->withErrors("");
                 } catch (\Exception $e) {
                     DB::rollback();
-                    return redirect()->route('category_edit', $id)->withErrors("");
+                    return redirect()->route('category_edit', $id)->withErrors(static::ERROR_500);
                 }
             }
         }
@@ -181,6 +194,12 @@ class HomeController extends Controller
     }
 
     public function setProductValue($request){
+        $vn_url = explode(' ', strtolower($request->get('vn_title')));
+        $vn_url = implode('-', $vn_url);
+
+        $en_url = explode(' ', strtolower($request->get('en_title')));
+        $en_url = implode('-', $en_url);
+
         $value = [
             'category_id' => $request->get('category_id'),
             'vn_title' => $request->get('vn_title'),
@@ -193,7 +212,9 @@ class HomeController extends Controller
             'vn_price' => $request->get('vn_price'),
             'en_price' => $request->get('en_price'),
             'type' => $request->get('type'),
-            'is_display' => $request->get('is_display') == "on" ? 1 : 0
+            'is_display' => $request->get('is_display') == "on" ? 1 : 0,
+            'vn_url' => $vn_url,
+            'en_url' => $en_url,
         ];
         if($request->hasFile('image_url')) {
             $file = $request->file('image_url');
@@ -208,15 +229,18 @@ class HomeController extends Controller
     public function productCreate(Request $request){
         if($request->isMethod('POST')) {
             try{
+
                 DB::beginTransaction();
                 $value = $this->setProductValue($request);
-                $product = new Products();
-                $product->insert($value);
+                if(Products::checkExistDetailByUrl($value['vn_url'], $value['en_url'])) {
+                    return redirect()->route('product_create')->withErrors("Đã có sản phẩm này!");
+                }
+                Products::insert($value);
                 DB::commit();
-                return redirect()->route('products')->withErrors("");
+                return redirect()->route('products')->withErrors("Cập nhật sản phẩm thành công!");
             } catch (\Exception $e) {
                 DB::rollback();
-                return redirect()->route('product_create')->withErrors("");
+                return redirect()->route('product_create')->withErrors(static::ERROR_500);
             }
         }
         $productCates = Categories::all();
@@ -233,6 +257,9 @@ class HomeController extends Controller
                 try {
                     DB::beginTransaction();
                     $value = $this->setProductValue($request);
+                    if(Products::checkExistDetailByUrl($value['vn_url'], $value['en_url'], $id)) {
+                        return redirect()->route('product_edit', $id)->withErrors("Đã có sản phẩm này!");
+                    }
                     $product->update($value);
                     DB::commit();
                     return redirect()->route('products')->withErrors("");
@@ -275,13 +302,16 @@ class HomeController extends Controller
             try{
                 DB::beginTransaction();
                 $value = $this->setCategoryValue($request);
+                if(NewCategories::checkExistDetailByUrl($value['vn_url'], $value['en_url'])) {
+                    return redirect()->route('new_category_create')->withErrors("Đã có danh mục này!");
+                }
                 $cate = new NewCategories();
                 $cate->insert($value);
                 DB::commit();
-                return redirect()->route('new_categories')->withErrors("");
+                return redirect()->route('new_categories')->withErrors("Cập nhật danh mục thành công!");
             } catch (\Exception $e) {
                 DB::rollback();
-                return redirect()->route('new_category_create')->withErrors("");
+                return redirect()->route('new_category_create')->withErrors(static::ERROR_500);
             }
         }
         return view('newcategories.detail', ['navNumber' => static::NEW_CATEGORIES]);
@@ -295,6 +325,9 @@ class HomeController extends Controller
                 try {
                     DB::beginTransaction();
                     $value = $this->setCategoryValue($request);
+                    if(NewCategories::checkExistDetailByUrl($value['vn_url'], $value['en_url'], $id)) {
+                        return redirect()->route('new_category_edit', $id)->withErrors("Đã có danh mục này!");
+                    }
                     if($value['is_display'] != $cate->is_display){
                         $new = new News();
                         $new->where('category_id', $cate->id)->update(['is_display' => $value['is_display']]);  
@@ -303,10 +336,10 @@ class HomeController extends Controller
                     $cate->update($value);
 
                     DB::commit();
-                    return redirect()->route('new_categories')->withErrors("");
+                    return redirect()->route('new_categories')->withErrors("Cập nhật danh mục thành công!");
                 } catch (\Exception $e) {
                     DB::rollback();
-                    return redirect()->route('new_category_edit', $id)->withErrors("");
+                    return redirect()->route('new_category_edit', $id)->withErrors(static::ERROR_500);
                 }
             }
         }
@@ -343,6 +376,12 @@ class HomeController extends Controller
     }
 
     public function setNewValue($request){
+        $vn_url = explode(' ', strtolower($request->get('vn_title')));
+        $vn_url = implode('-', $vn_url);
+
+        $en_url = explode(' ', strtolower($request->get('en_title')));
+        $en_url = implode('-', $en_url);
+
         $dateArr = explode('/', $request->get('release_at'));
         $value = [
             'category_id' => $request->get('category_id'),
@@ -351,7 +390,9 @@ class HomeController extends Controller
             'vn_content' => $request->get('vn_content'),
             'en_content' => $request->get('en_content'),
             'is_display' => $request->get('is_display') == "on" ? 1 : 0,
-            'release_at' => $dateArr[2].'-'.$dateArr[1].'-'.$dateArr[0]
+            'release_at' => $dateArr[2].'-'.$dateArr[1].'-'.$dateArr[0],
+            'vn_url' => $vn_url,
+            'en_url' => $en_url,
         ];
         if($request->hasFile('image_url')) {
             $file = $request->file('image_url');
@@ -368,6 +409,9 @@ class HomeController extends Controller
             try{
                 DB::beginTransaction();
                 $value = $this->setNewValue($request);
+                if(News::checkExistDetailByUrl($value['vn_url'], $value['en_url'])) {
+                    return redirect()->route('new_create')->withErrors("Đã có bài viết này!");
+                }
                 $new = new News();
                 $new->insert($value);
                 DB::commit();
@@ -389,6 +433,9 @@ class HomeController extends Controller
                 try {
                     DB::beginTransaction();
                     $value = $this->setNewValue($request);
+                    if(News::checkExistDetailByUrl($value['vn_url'], $value['en_url'], $id)) {
+                        return redirect()->route('new_edit', $id)->withErrors("Đã có bài viết này!");
+                    }
                     $new->update($value);
                     DB::commit();
                     return redirect()->route('news')->withErrors("");

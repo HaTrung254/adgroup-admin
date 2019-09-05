@@ -17,7 +17,7 @@ return [
 
     // chưa convert tiếng anh
     'company_des' => 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.',
-	'sanphamlienquan' => 'Sản phẩm liên quan',
+	'sanphamlienquan' => 'Related products',
     'sanphamlienquan_des' => 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia',
 	'noibat' => 'Featured Products',
     'noibat_description' => 'Những thiết bị hàng đầu phục vụ cho công tác nghiên cứu trong phòng thí'.
@@ -55,4 +55,6 @@ return [
     'find_1' => 'Tìm kiếm được',
     'find_2_product' => 'products.',
     'find_2_new' => 'news.',
+    'hangsx' => 'Brand',
+    'all' => 'All',
 ];

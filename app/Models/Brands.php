@@ -6,20 +6,16 @@ use App\Helpers\BaseHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class NewCategories extends Model
+class Brands extends Model
 {
-    protected $table = 'new_categories';
+	protected $table = 'brands';
     public $timestamps = false;
-    public $fillable = ['vn_title', 'en_title', 'order','is_display', 'vn_url', 'en_url'];
+    public $fillable = ['vn_title', 'en_title', 'vn_content', 'en_content', 'order','is_display', 'vn_url', 'en_url', 'image_url'];
 
     public static function queryList($langSession = 'vn')
     {
         return static::select('new_categories.id', DB::raw("new_categories.{$langSession}_title as title, new_categories.{$langSession}_url as url"),
             DB::raw('COUNT(news.id) as new_count'))
-            ->join('news', function($join) {
-                $join->on('new_categories.id', '=', 'news.category_id')
-                ->where('release_at', '<=', date('Y-m-d'));
-            })
             ->where('new_categories.is_display', BaseHelper::DISPLAY_FLAG)
             ->orderBy('new_categories.order')
             ->groupBy(['new_categories.id', 'new_categories.en_title', 'new_categories.vn_title', 'new_categories.vn_url','new_categories.en_url']);
