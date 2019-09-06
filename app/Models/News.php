@@ -14,7 +14,8 @@ class News extends Model
 
     public static function queryNews($lang, $type = null, $limit = null, $cate = null, $ignoreId = null, $where = null)
     {
-        $query = static::select(DB::raw("news.id, news.{$lang}_title as title, news.{$lang}_content as content, news.image_url, news.category_id, news.release_at, news.{$lang}_url as url, new_categories.{$lang}_url as cate_url"))
+        $query = static::select(DB::raw("news.id, news.{$lang}_title as title, news.{$lang}_content as content, 
+        news.image_url, news.category_id, news.release_at, news.{$lang}_url as url, new_categories.{$lang}_url as cate_url"))
             ->leftJoin('new_categories', function($join) {
                 $join->on('new_categories.id', '=', 'news.category_id')
                 ->where('new_categories.is_display', BaseHelper::DISPLAY_FLAG);

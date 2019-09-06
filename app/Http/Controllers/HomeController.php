@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\BaseHelper;
+use App\Models\Brands;
 use App\Models\Categories;
 use App\Models\Products;
 use App\Models\Sliders;
@@ -19,6 +21,7 @@ class HomeController extends Controller
     const PRODUCTS = 3;
     const NEW_CATEGORIES = 4;
     const NEWS = 5;
+    const BRANDS = 6;
     const ERROR_500 = "Có lỗi xảy ra. Vui lòng thử lại!";
     /**
      * Create a new controller instance.
@@ -99,10 +102,10 @@ class HomeController extends Controller
     }
 
     public function setCategoryValue($request){
-        $vn_url = explode(' ', strtolower($request->get('vn_title')));
+        $vn_url = explode(' ', BaseHelper::convert_vi_to_en(strtolower($request->get('vn_title'))));
         $vn_url = implode('-', $vn_url);
 
-        $en_url = explode(' ', strtolower($request->get('en_title')));
+        $en_url = explode(' ', BaseHelper::convert_vi_to_en(strtolower($request->get('en_title'))));
         $en_url = implode('-', $en_url);
 
         return [
@@ -194,10 +197,10 @@ class HomeController extends Controller
     }
 
     public function setProductValue($request){
-        $vn_url = explode(' ', strtolower($request->get('vn_title')));
+        $vn_url = explode(' ', BaseHelper::convert_vi_to_en(strtolower($request->get('vn_title'))));
         $vn_url = implode('-', $vn_url);
 
-        $en_url = explode(' ', strtolower($request->get('en_title')));
+        $en_url = explode(' ', BaseHelper::convert_vi_to_en(strtolower($request->get('en_title'))));
         $en_url = implode('-', $en_url);
 
         $value = [
@@ -376,7 +379,7 @@ class HomeController extends Controller
     }
 
     public function setNewValue($request){
-        $vn_url = explode(' ', strtolower($request->get('vn_title')));
+        $vn_url = explode(' ', BaseHelper::convert_vi_to_en(strtolower($request->get('vn_title'))));
         $vn_url = implode('-', $vn_url);
 
         $en_url = explode(' ', strtolower($request->get('en_title')));
@@ -456,5 +459,96 @@ class HomeController extends Controller
         }
 
         return redirect()->route('news')->withErrors("");
+    }
+
+    public function brands(Request $request){
+        $key = $request->get('key');
+        $news = !empty($request->get('key')) ?
+            Brands::where('vn_title', 'LIKE', "%{$key}%")
+                ->orWhere('en_title', 'LIKE', "%{$key}%")
+                ->orderBy('order', 'desc')->paginate(10) :
+            Brands::orderBy('order', 'desc')->paginate(10);
+        $routeSearch = route('brands');
+        return view('brands.list', ['brands' => $news, 'hasSearch' => true,
+            'routeCreate' => route('brand_create'), 'navNumber' => static::BRANDS,
+            'routeSearch' => $routeSearch, 'key' => $key]);
+    }
+
+    public function setBrandValue($request){
+        $vn_url = explode(' ', BaseHelper::convert_vi_to_en(strtolower($request->get('vn_title'))));
+        $vn_url = implode('-', $vn_url);
+
+        $en_url = explode(' ', BaseHelper::convert_vi_to_en(strtolower($request->get('en_title'))));
+        $en_url = implode('-', $en_url);
+
+        $value = [
+            'vn_title' => $request->get('vn_title'),
+            'en_title' => $request->get('en_title'),
+            'vn_content' => $request->get('vn_content'),
+            'en_content' => $request->get('en_content'),
+            'is_display' => $request->get('is_display') == "on" ? 1 : 0,
+            'vn_url' => $vn_url,
+            'en_url' => $en_url,
+            'order' => $request->get('order'),
+        ];
+        if($request->hasFile('image_url')) {
+            $file = $request->file('image_url');
+            $fileName = date('YmdHis') . "." . $file->getClientOriginalExtension();
+            $folderPath = static::FOLDER_UPLOAD ."/brands";
+            $value['image_url'] = $folderPath ."/". $fileName;
+            $file->move($folderPath, $fileName);
+        }
+        return $value;
+    }
+
+    public function brandCreate(Request $request){
+        if($request->isMethod('POST')) {
+//            try{
+                DB::beginTransaction();
+                $value = $this->setBrandValue($request);
+                if(Brands::checkExistDetailByUrl($value['vn_url'], $value['en_url'])) {
+                    return redirect()->route('brand_create')->withErrors("Đã có nhãn hàng này!");
+                }
+                Brands::insert($value);
+                DB::commit();
+                return redirect()->route('brands')->withErrors("Thêm nhãn hàng thành công!");
+//            } catch (\Exception $e) {
+//                DB::rollback();
+//                return redirect()->route('brand_create')->withErrors(static::ERROR_500);
+//            }
+        }
+        return view('brands.detail', ['navNumber' => static::BRANDS]);
+    }
+
+    public function brandEdit($id, Request $request){
+        $id = !empty($id) ? $id : $request->get('id');
+        $brand = Brands::find($id);
+        if($request->isMethod('POST')) {
+            if($brand) {
+                try {
+                    DB::beginTransaction();
+                    $value = $this->setBrandValue($request);
+                    if(Brands::checkExistDetailByUrl($value['vn_url'], $value['en_url'], $id)) {
+                        return redirect()->route('brand_edit', $id)->withErrors("Đã có nhãn hàng này!");
+                    }
+                    $brand->update($value);
+                    DB::commit();
+                    return redirect()->route('brands')->withErrors("Cập nhật nhãn hàng thành công!");
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    return redirect()->route('brand_edit', $id)->withErrors(static::ERROR_500);
+                }
+            }
+        }
+        return view('news.detail', ['brand' => $brand, 'navNumber' => static::BRANDS]);
+    }
+
+    public function brandDelete($id){
+        $brand = Brands::find($id);
+        if($brand != null) {
+            $brand->delete();
+        }
+
+        return redirect()->route('brands')->withErrors("Đã xóa nhãn hàng này!");
     }
 }

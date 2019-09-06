@@ -33,6 +33,13 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/new-delete/{id}', 'HomeController@newDelete')->name('new_delete');
     /** news - end **/
 
+    /** brand - start **/
+    Route::get('/brands', 'HomeController@brands')->name('brands');
+    Route::match(['get', 'post'], '/brand-edit/{id}', 'HomeController@brandEdit')->name('brand_edit');
+    Route::match(['get', 'post'], '/brand-create', 'HomeController@brandCreate')->name('brand_create');
+    Route::get('/brand-delete/{id}', 'HomeController@brandDelete')->name('brand_delete');
+    /** brand - end **/
+
     Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 });
 
@@ -56,10 +63,10 @@ Route::get('/available-products', 'FrontendController@productAvailable')->name('
 /** tin-tuc start **/
 Route::match(['get', 'post'], '/tin-tuc', 'FrontendController@newList')->name('vn_new_list');
 Route::match(['get', 'post'], '/news', 'FrontendController@newList')->name('en_new_list');
-Route::get('/tin-tuc/{url}', 'FrontendController@newCategoryList')->name('vn_new_category_list');
-Route::get('/news/{url}', 'FrontendController@newCategoryList')->name('en_new_category_list');
-Route::get('/tin-tuc/{url}', 'FrontendController@newDetail')->name('new_detail');
-Route::get('/new/{id}', 'FrontendController@newDetail')->name('new_detail');
+Route::get('/tin-tuc/{cate-url}', 'FrontendController@newCategoryList')->name('vn_new_category_list');
+Route::get('/news/{cate-url}', 'FrontendController@newCategoryList')->name('en_new_category_list');
+Route::get('/tin-tuc/{cate-url}/{url}', 'FrontendController@newDetail')->name('vn_new_detail');
+Route::get('/news/{cate-url}/{url}', 'FrontendController@newDetail')->name('en_new_detail');
 /** tin-tuc end **/
 
 Route::get('/lang/{lang}', 'FrontendController@changeLanguage')->name('change_language');
