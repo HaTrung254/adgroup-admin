@@ -31,7 +31,7 @@ class Products extends Model
         $query = static::select(DB::raw("products.id, products.{$lang}_title as title, products.image_url, products.{$lang}_price as price, products.category_id, products.{$lang}_url as url, product_categories.{$lang}_url as cate_url"))
             ->leftJoin('product_categories', function($join) {
                 $join->on('product_categories.id', '=', 'products.category_id')
-                    ->where('new_categories.is_display', BaseHelper::DISPLAY_FLAG);
+                    ->where('product_categories.is_display', BaseHelper::DISPLAY_FLAG);
             })
             ->where('products.is_display', BaseHelper::DISPLAY_FLAG);
 

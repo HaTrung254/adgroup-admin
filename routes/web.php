@@ -58,7 +58,8 @@ Route::match(['get', 'post'], '/tin-tuc', 'FrontendController@newList')->name('v
 Route::match(['get', 'post'], '/news', 'FrontendController@newList')->name('en_new_list');
 Route::get('/tin-tuc/{url}', 'FrontendController@newCategoryList')->name('vn_new_category_list');
 Route::get('/news/{url}', 'FrontendController@newCategoryList')->name('en_new_category_list');
-Route::get('/new-{id}', 'FrontendController@newDetail')->name('new_detail');
+Route::get('/tin-tuc/{url}', 'FrontendController@newDetail')->name('new_detail');
+Route::get('/new/{id}', 'FrontendController@newDetail')->name('new_detail');
 /** tin-tuc end **/
 
 Route::get('/lang/{lang}', 'FrontendController@changeLanguage')->name('change_language');
