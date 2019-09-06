@@ -11,7 +11,7 @@
                         @foreach($news as $item)
                             <div class="col-md-12 d-flex ftco-animate fadeInUp ftco-animated">
                                 <div class="blog-entry align-self-stretch d-md-flex">
-                                    <a href="{{ route('new_detail', $item->id) }}" class="block-20"
+                                    <a href="{{ routeLangWithParams('new_detail', [$item->cate_url, $item->url]) }}" class="block-20"
                                        style="background-image: url(@asset('/'.$item->image_url));">
                                     </a>
                                     <div class="text d-block pl-md-4">
@@ -20,10 +20,10 @@
                                             </div>
                                         </div>
                                         <h3 class="heading">
-                                            <a href="{{ route('new_detail', $item->id) }}">{{ $item->title }}</a>
+                                            <a href="{{ routeLangWithParams('new_detail', [$item->cate_url, $item->url]) }}">{{ $item->title }}</a>
                                         </h3>
                                         <p>{{ substr(strip_tags($item->content), 0, 100) }}...</p>
-                                        <p><a href="{{ route('new_detail', $item->id) }}"
+                                        <p><a href="{{ routeLangWithParams('new_detail', [$item->cate_url, $item->url]) }}"
                                               class="btn btn-primary py-2 px-3">Read more</a></p>
                                     </div>
                                 </div>

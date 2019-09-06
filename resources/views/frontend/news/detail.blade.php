@@ -23,7 +23,7 @@
             	<h3 class="heading">@trans('title.danhmuc')</h3>
               <ul class="categories">
               	@foreach($newCates as $item)
-                	<li><a href="{{ route('new_category_list', $item->id) }}">{{ $item->title }} <span>({{ $item->new_count }})</span></a></li>
+                	<li><a href="{{ routeLangWithParams('new_category_list', $item->url) }}">{{ $item->title }} <span>({{ $item->new_count }})</span></a></li>
                 @endforeach
               </ul>
             </div>
@@ -32,9 +32,9 @@
               	<h3 class="heading">@trans('title.recent_blog')</h3>
               	@foreach($recentCates as $item)
 				<div class="block-21 mb-4 d-flex">
-					<a href="{{ route('new_detail', $item->id) }}" class="blog-img mr-4" style="background-image: url(@asset('/'.$item->image_url));"></a>
+					<a href="{{ routeLangWithParams('new_detail', [$item->cate_url, $item->url]) }}" class="blog-img mr-4" style="background-image: url(@asset('/'.$item->image_url));"></a>
 					<div class="text">
-						<h3 class="heading-1"><a href="{{ route('new_detail', $item->id) }}">{{ $item->title }}</a></h3>
+						<h3 class="heading-1"><a href="{{ routeLangWithParams('new_detail', [$item->cate_url, $item->url]) }}">{{ $item->title }}</a></h3>
 						<div class="meta">
 							<div><span class="icon-calendar"></span> @dateFormat($item->release_at)</div>
 						</div>
