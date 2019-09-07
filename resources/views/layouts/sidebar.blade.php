@@ -56,7 +56,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('brands') }}" class="nav-link">
-                        <i class="nav-icon fa fas fa-newspaper-o text-info"></i>
+                        <i class="nav-icon fa fas fa-users text-success"></i>
                         <p>Nhãn hàng</p>
                     </a>
                 </li>
