@@ -7,14 +7,17 @@
 					<a href="images/img1.png" class="image-popup"><img src="@asset('/'.$product->image_url)" class="img-fluid" alt="Colorlib Template"></a>
 				</div>
 				<div class="col-lg-6 product-details pl-md-5 ftco-animate fadeInUp ftco-animated">
-					<h3>{{ $product->title }}</h3>
+					<h3>{{ $product->title }}<span></h3>
 					<h4>@trans('title.hangsx'): {{ $product->brand }}</h4>
-					<p>@trans('title.price'): <b style="color: #0088cc;"> 
+					<p>@trans('title.price'): <b style="color: #0088cc;">
 						@if(!empty($product->price))
 							{{ number_format($product->price) }} @trans('title.money')
 						@else
 							@trans('title.dangcapnhat')
-						@endif</b></p>
+						@endif</b>
+					</p>
+					<a style="margin-bottom: 10px" href="{{ route('checkout', $product->url) }}" class="card-link btn btn-primary">@trans('title.contact_now')</a>
+
 					{!! $product->description !!}
 				</div>
 			</div>
@@ -31,7 +34,6 @@
 			<div class="row justify-content-center mb-3 pb-3">
 				<div class="col-md-12 heading-section text-center ftco-animate fadeInUp ftco-animated">
 					<h2 class="mb-4">@trans('title.sanphamlienquan')</h2>
-					<p>@trans('title.sanphamlienquan_des')</p>
 				</div>
 			</div>
 		</div>

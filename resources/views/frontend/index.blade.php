@@ -52,10 +52,9 @@
                     <a href="{{ route('checkout', $product->id) }}">
                         <img src="@asset('/'.$product->image_url)" alt="" class="card-img-top">
                         <div class="card-body text-center">
-                            <h5 class="card-title" style="text-align: center"> <strong>{{ $product->title }}</strong></h5>
-                            <p class="card-text">Ảnh ở chế độ chân không cao : 3nm - 8 nm</p>
-                            <p class="card-text text-black">Giá bán: {{ !empty($product->price) ? number_format($product->price). "đ" : "Liên hệ" }}</p>
-                            <a href="{{ route('checkout', $product->id) }}" class="card-link btn btn-primary center">Liên Hệ Ngay</a>
+                            <h5 class="card-title"> <strong>{{ $product->title }}</strong></h5>
+                            <p class="card-text text-black">@trans('title.price'): @if(!empty($product->price)) {{ number_format($product->price) }} @trans('title.money') @else @trans('title.dangcapnhat') @endif</p>
+                            <a href="{{ route('checkout', $product->id) }}" class="card-link btn btn-primary center">@trans('title.contact_now')</a>
                         </div>
                     </a>
                 </div>
@@ -84,10 +83,10 @@
                         <a href="{{ route('checkout', $product->id) }}">
                             <img src="@asset('/'.$product->image_url)" alt="" class="card-img-top">
                             <div class="card-body text-center">
-                                <h5 class="card-title" style="text-align: center"> <strong>{{ $product->title }}</strong></h5>
-                                <p class="card-text text-black">@trans('title.price'): {{ !empty($product->price) ? number_format($product->price). "đ" : "Liên hệ" }}</p>
-                                <a href="{{ route('checkout', $product->id) }}" class="card-link btn btn-primary center">@trans('title.contact_now')</a>
-                            </div>
+                            <h5 class="card-title"> <strong>{{ $product->title }}</strong></h5>
+                            <p class="card-text text-black">@trans('title.price'): @if(!empty($product->price)) {{ number_format($product->price) }} @trans('title.money') @else @trans('title.dangcapnhat') @endif</p>
+                            <a href="{{ route('checkout', $product->id) }}" class="card-link btn btn-primary center">@trans('title.contact_now')</a>
+                        </div>
                         </a>
                     </div>
                 @endforeach
@@ -163,14 +162,9 @@
             <h2 class="mb-4">@trans('title.hangdaidien')</h2>
         </div>
         <div class="logo-slider owl-carousel owl-theme js-logo-slider-height container">
-            <div class="js-logo-slider-height"><img class="" src="@asset('/front-end/images/Eppendorf-Logo.png')" alt=""></div>
-            <div class="js-logo-slider-height"><img class="" src="@asset('/front-end/images/micotrac-logo.png')" alt=""></div>
-            <div class="js-logo-slider-height"><img class="" src="@asset('/front-end/images/thermo-fisher-logo.png')" alt=""></div>
-            <div class="js-logo-slider-height"><img class="" src="@asset('/front-end/images/thermo-fisher-logo.png')" alt=""></div>
-            <div class="js-logo-slider-height"><img class="" src="@asset('/front-end/images/thermo-fisher-logo.png')" alt=""></div>
-            <div class="js-logo-slider-height"><img class="" src="@asset('/front-end/images/thermo-fisher-logo.png')" alt=""></div>
-            <div class="js-logo-slider-height"><img class="" src="@asset('/front-end/images/thermo-fisher-logo.png')" alt=""></div>
-            <div class="js-logo-slider-height"><img class="" src="@asset('/front-end/images/thermo-fisher-logo.png')" alt=""></div>
+            @foreach($brands as $item)
+                <div class="js-logo-slider-height"><a href="{{ routeLangWithParams('brand_detail', $item->url) }}"><img class="" src="@asset('/'. $item->image_url)" alt=""></a></div>
+            @endforeach
         </div>
 
     </section>

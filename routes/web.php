@@ -63,19 +63,26 @@ Route::get('/available-products', 'FrontendController@productAvailable')->name('
 /** tin-tuc start **/
 Route::match(['get', 'post'], '/tin-tuc', 'FrontendController@newList')->name('vn_new_list');
 Route::match(['get', 'post'], '/news', 'FrontendController@newList')->name('en_new_list');
-Route::get('/tin-tuc/{cate-url}', 'FrontendController@newCategoryList')->name('vn_new_category_list');
-Route::get('/news/{cate-url}', 'FrontendController@newCategoryList')->name('en_new_category_list');
-Route::get('/tin-tuc/{cate-url}/{url}', 'FrontendController@newDetail')->name('vn_new_detail');
-Route::get('/news/{cate-url}/{url}', 'FrontendController@newDetail')->name('en_new_detail');
+Route::get('/tin-tuc/{cate_url}', 'FrontendController@newCategoryList')->name('vn_new_category_list');
+Route::get('/news/{cate_url}', 'FrontendController@newCategoryList')->name('en_new_category_list');
+Route::get('/tin-tuc/{cate_url}/{url}', 'FrontendController@newDetail')->name('vn_new_detail');
+Route::get('/news/{cate_url}/{url}', 'FrontendController@newDetail')->name('en_new_detail');
 /** tin-tuc end **/
+
+/** brand start **/
+Route::match(['get', 'post'], '/thuong-hieu', 'FrontendController@brandList')->name('vn_brand_list');
+Route::match(['get', 'post'], '/brands', 'FrontendController@brandList')->name('en_brand_list');
+Route::get('/thuong-hieu/{url}', 'FrontendController@brandDetail')->name('vn_brand_detail');
+Route::get('/brands/{cate_url}', 'FrontendController@brandDetail')->name('en_brand_detail');
+/** brand end **/
 
 Route::get('/lang/{lang}', 'FrontendController@changeLanguage')->name('change_language');
 
 /*static pages*/
 
-Route::get('/about.html', 'PagesController@about')->name('about');
+Route::get('/contact', 'PagesController@about')->name('en_contact');
+Route::get('/lien-he', 'PagesController@about')->name('vn_contact');
 Route::post('/mail-contact', 'PagesController@mailContact')->name('mail_contact');
 Route::post('/checkout-post', 'PagesController@checkoutPost')->name('checkout_post');
-Route::get('/checkout/{product_id}', 'PagesController@checkout')->name('checkout');
-
+Route::get('/checkout/{product_url}', 'PagesController@checkout')->name('checkout');
 /*end static pages*/

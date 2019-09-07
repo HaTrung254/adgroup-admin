@@ -11,7 +11,7 @@ return [
     'dangcapnhat' => 'Updating',
     'money' => '$',
     'congty' => 'Company',
-    'nsx' => 'Producers',
+    'nsx' => 'Brands',
     'khach' => 'Customers',
     'timkiem' => 'Type to search',
 
@@ -52,7 +52,7 @@ return [
     'price' => 'Price',
     'read_more' => 'Read more',
     'update_product' => 'Products will be updated soon',
-    'find_1' => 'Tìm kiếm được',
+    'find_1' => 'About',
     'find_2_product' => 'products.',
     'find_2_new' => 'news.',
     'hangsx' => 'Brand',

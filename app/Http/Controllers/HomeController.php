@@ -121,16 +121,14 @@ class HomeController extends Controller
     public function categoryCreate(Request $request){
         if($request->isMethod('POST')) {
             try{
-                DB::beginTransaction();
                 $value = $this->setCategoryValue($request);
+                $name = $value['vn_title'];
                 if(Categories::checkExistDetailByUrl($value['vn_url'], $value['en_url'])) {
                     return redirect()->route('category_create')->withErrors("Đã có danh mục này!");    
                 }
                 Categories::insert($value);
-                DB::commit();
-                return redirect()->route('categories')->withErrors("");
+                return redirect()->route('categories')->withErrors("Thêm danh mục {$name} thành công!");
             } catch (\Exception $e) {
-                DB::rollback();
                 return redirect()->route('category_create')->withErrors(static::ERROR_500);
             }
         }
@@ -145,6 +143,7 @@ class HomeController extends Controller
                 try {
                     DB::beginTransaction();
                     $value = $this->setCategoryValue($request);
+                    $name = $value['vn_title'];
                     if(Categories::checkExistDetailByUrl($value['vn_url'], $value['en_url'], $id)) {
                         return redirect()->route('category_edit', $id)->withErrors("Đã có danh mục này!");
                     }
@@ -155,7 +154,7 @@ class HomeController extends Controller
                     
                     $cate->update($value);
                     DB::commit();
-                    return redirect()->route('categories')->withErrors("");
+                    return redirect()->route('categories')->withErrors("Cập nhật danh mục {$name} thành công!");
                 } catch (\Exception $e) {
                     DB::rollback();
                     return redirect()->route('category_edit', $id)->withErrors(static::ERROR_500);
@@ -167,6 +166,7 @@ class HomeController extends Controller
 
     public function categoryDelete($id){
         $cate = Categories::find($id);
+        $name = $cate->vn_title;
         if($cate != null) {
             try {
                 DB::beginTransaction();
@@ -179,7 +179,7 @@ class HomeController extends Controller
             }
         }
 
-        return redirect()->route('categories')->withErrors("");
+        return redirect()->route('categories')->withErrors("Đã xóa danh mục {$name} và các sản phẩm thuộc danh mục này.");
     }
 
     public function products(Request $request){
@@ -232,17 +232,14 @@ class HomeController extends Controller
     public function productCreate(Request $request){
         if($request->isMethod('POST')) {
             try{
-
-                DB::beginTransaction();
                 $value = $this->setProductValue($request);
+                $name = $value['vn_title'];
                 if(Products::checkExistDetailByUrl($value['vn_url'], $value['en_url'])) {
                     return redirect()->route('product_create')->withErrors("Đã có sản phẩm này!");
                 }
                 Products::insert($value);
-                DB::commit();
-                return redirect()->route('products')->withErrors("Cập nhật sản phẩm thành công!");
+                return redirect()->route('products')->withErrors("Thêm sản phẩm {$name} thành công!");
             } catch (\Exception $e) {
-                DB::rollback();
                 return redirect()->route('product_create')->withErrors(static::ERROR_500);
             }
         }
@@ -258,17 +255,15 @@ class HomeController extends Controller
         if($request->isMethod('POST')) {
             if($product) {
                 try {
-                    DB::beginTransaction();
                     $value = $this->setProductValue($request);
+                    $name = $value['vn_title'];
                     if(Products::checkExistDetailByUrl($value['vn_url'], $value['en_url'], $id)) {
                         return redirect()->route('product_edit', $id)->withErrors("Đã có sản phẩm này!");
                     }
                     $product->update($value);
-                    DB::commit();
-                    return redirect()->route('products')->withErrors("");
+                    return redirect()->route('products')->withErrors("Cập nhật sản phẩm {$name} thành công!");
                 } catch (\Exception $e) {
-                    DB::rollback();
-                    return redirect()->route('product_edit', $id)->withErrors("");
+                    return redirect()->route('product_edit', $id)->withErrors(static::ERROR_500);
                 }
             }
         }
@@ -280,11 +275,12 @@ class HomeController extends Controller
 
     public function productDelete($id){
         $product = Products::find($id);
+        $name = $product->vn_title;
         if($product != null) {
             $product->delete();
         }
 
-        return redirect()->route('products')->withErrors("");
+        return redirect()->route('products')->withErrors("Xóa sản phẩm {$name} thành công!");
     }
 
     public function newCategories(Request $request){
@@ -303,17 +299,14 @@ class HomeController extends Controller
     public function newCategoryCreate(Request $request){
         if($request->isMethod('POST')) {
             try{
-                DB::beginTransaction();
                 $value = $this->setCategoryValue($request);
+                $name = $value['vn_title'];
                 if(NewCategories::checkExistDetailByUrl($value['vn_url'], $value['en_url'])) {
                     return redirect()->route('new_category_create')->withErrors("Đã có danh mục này!");
                 }
-                $cate = new NewCategories();
-                $cate->insert($value);
-                DB::commit();
-                return redirect()->route('new_categories')->withErrors("Cập nhật danh mục thành công!");
+                NewCategories::insert($value);
+                return redirect()->route('new_categories')->withErrors("Cập nhật danh mục {$name} thành công!");
             } catch (\Exception $e) {
-                DB::rollback();
                 return redirect()->route('new_category_create')->withErrors(static::ERROR_500);
             }
         }
@@ -326,8 +319,8 @@ class HomeController extends Controller
         if($request->isMethod('POST')) {
             if($cate) {
                 try {
-                    DB::beginTransaction();
                     $value = $this->setCategoryValue($request);
+                    $name = $value['vn_title'];
                     if(NewCategories::checkExistDetailByUrl($value['vn_url'], $value['en_url'], $id)) {
                         return redirect()->route('new_category_edit', $id)->withErrors("Đã có danh mục này!");
                     }
@@ -337,11 +330,8 @@ class HomeController extends Controller
                     }
                     
                     $cate->update($value);
-
-                    DB::commit();
-                    return redirect()->route('new_categories')->withErrors("Cập nhật danh mục thành công!");
+                    return redirect()->route('new_categories')->withErrors("Cập nhật danh mục {$name} thành công!");
                 } catch (\Exception $e) {
-                    DB::rollback();
                     return redirect()->route('new_category_edit', $id)->withErrors(static::ERROR_500);
                 }
             }
@@ -351,6 +341,7 @@ class HomeController extends Controller
 
     public function newCategoryDelete($id){
         $cate = NewCategories::find($id);
+        $name = $cate->vn_title;
         if($cate != null) {
             try {
                 DB::beginTransaction();
@@ -362,7 +353,7 @@ class HomeController extends Controller
                 DB::rollback();
             }
         }
-        return redirect()->route('new_categories')->withErrors("");
+        return redirect()->route('new_categories')->withErrors("Xóa danh mục {$name} thành công!");
     }
 
     public function news(Request $request){
@@ -410,18 +401,14 @@ class HomeController extends Controller
     public function newCreate(Request $request){
         if($request->isMethod('POST')) {
             try{
-                DB::beginTransaction();
                 $value = $this->setNewValue($request);
                 if(News::checkExistDetailByUrl($value['vn_url'], $value['en_url'])) {
                     return redirect()->route('new_create')->withErrors("Đã có bài viết này!");
                 }
-                $new = new News();
-                $new->insert($value);
-                DB::commit();
-                return redirect()->route('news')->withErrors("");
+                News::insert($value);
+                return redirect()->route('news')->withErrors("Thêm bài viết thành công!");
             } catch (\Exception $e) {
-                DB::rollback();
-                return redirect()->route('new_create')->withErrors("");
+                return redirect()->route('new_create')->withErrors(static::ERROR_500);
             }
         }
         $newCates = NewCategories::all();
@@ -433,19 +420,16 @@ class HomeController extends Controller
         $new = News::find($id);
         if($request->isMethod('POST')) {
             if($new) {
-                try {
-                    DB::beginTransaction();
+                // try {
                     $value = $this->setNewValue($request);
                     if(News::checkExistDetailByUrl($value['vn_url'], $value['en_url'], $id)) {
                         return redirect()->route('new_edit', $id)->withErrors("Đã có bài viết này!");
                     }
                     $new->update($value);
-                    DB::commit();
-                    return redirect()->route('news')->withErrors("");
-                } catch (\Exception $e) {
-                    DB::rollback();
-                    return redirect()->route('new_edit', $id)->withErrors("");
-                }
+                    return redirect()->route('news')->withErrors("Cập nhật bài viết thành công!");
+                // } catch (\Exception $e) {
+                //     return redirect()->route('new_edit', $id)->withErrors(static::ERROR_500);
+                // }
             }
         }
         $newCates = NewCategories::all();
@@ -458,7 +442,7 @@ class HomeController extends Controller
             $new->delete();
         }
 
-        return redirect()->route('news')->withErrors("");
+        return redirect()->route('news')->withErrors("Xóa bài viết thành công!");
     }
 
     public function brands(Request $request){
@@ -484,6 +468,8 @@ class HomeController extends Controller
         $value = [
             'vn_title' => $request->get('vn_title'),
             'en_title' => $request->get('en_title'),
+            'vn_description' => $request->get('vn_description'),
+            'en_description' => $request->get('en_description'),
             'vn_content' => $request->get('vn_content'),
             'en_content' => $request->get('en_content'),
             'is_display' => $request->get('is_display') == "on" ? 1 : 0,
@@ -503,19 +489,17 @@ class HomeController extends Controller
 
     public function brandCreate(Request $request){
         if($request->isMethod('POST')) {
-//            try{
-                DB::beginTransaction();
+           try{
                 $value = $this->setBrandValue($request);
+                $name = $value['vn_title'];
                 if(Brands::checkExistDetailByUrl($value['vn_url'], $value['en_url'])) {
                     return redirect()->route('brand_create')->withErrors("Đã có nhãn hàng này!");
                 }
                 Brands::insert($value);
-                DB::commit();
-                return redirect()->route('brands')->withErrors("Thêm nhãn hàng thành công!");
-//            } catch (\Exception $e) {
-//                DB::rollback();
-//                return redirect()->route('brand_create')->withErrors(static::ERROR_500);
-//            }
+                return redirect()->route('brands')->withErrors("Thêm nhãn hàng {$name} thành công!");
+           } catch (\Exception $e) {
+               return redirect()->route('brand_create')->withErrors(static::ERROR_500);
+           }
         }
         return view('brands.detail', ['navNumber' => static::BRANDS]);
     }
@@ -526,29 +510,28 @@ class HomeController extends Controller
         if($request->isMethod('POST')) {
             if($brand) {
                 try {
-                    DB::beginTransaction();
                     $value = $this->setBrandValue($request);
+                    $name = $value['vn_title'];
                     if(Brands::checkExistDetailByUrl($value['vn_url'], $value['en_url'], $id)) {
                         return redirect()->route('brand_edit', $id)->withErrors("Đã có nhãn hàng này!");
                     }
                     $brand->update($value);
-                    DB::commit();
-                    return redirect()->route('brands')->withErrors("Cập nhật nhãn hàng thành công!");
+                    return redirect()->route('brands')->withErrors("Cập nhật nhãn hàng {$name} thành công!");
                 } catch (\Exception $e) {
-                    DB::rollback();
                     return redirect()->route('brand_edit', $id)->withErrors(static::ERROR_500);
                 }
             }
         }
-        return view('news.detail', ['brand' => $brand, 'navNumber' => static::BRANDS]);
+        return view('brands.detail', ['brand' => $brand, 'navNumber' => static::BRANDS]);
     }
 
     public function brandDelete($id){
         $brand = Brands::find($id);
+        $name = $brand->vn_title;
         if($brand != null) {
             $brand->delete();
         }
 
-        return redirect()->route('brands')->withErrors("Đã xóa nhãn hàng này!");
+        return redirect()->route('brands')->withErrors("Đã xóa nhãn hàng {$name} khỏi danh sách!");
     }
 }

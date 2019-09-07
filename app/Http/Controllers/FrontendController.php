@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\BaseHelper;
+use App\Models\Brands;
 use App\Models\News;
 use App\Models\NewCategories;
 use App\Models\Products;
@@ -42,7 +43,8 @@ class FrontendController
         $sliders = Sliders::getSliders($lang);
         $noibatProduct = Products::getProducts($lang, Products::NOI_BAT, Products::LIMIT_PRODUCT);
         $sancoProduct = Products::getProducts($lang, Products::SAN_CO, Products::LIMIT_PRODUCT);
-        return view('frontend.index', compact('sliders', 'noibatProduct', 'sancoProduct'));
+        $brands = Brands::getList($lang);
+        return view('frontend.index', compact('sliders', 'noibatProduct', 'sancoProduct', 'brands'));
     }
 
     public function productSearch(Request $request)
@@ -88,7 +90,7 @@ class FrontendController
     {
         $lang = $this->getLang();
         $key = $request->get('key');
-        $where = !empty($key) ? "({$lang}_title LIKE '%{$key}%' or {$lang}_content LIKE '%{$key}%')" : "";
+        $where = !empty($key) ? "(news.{$lang}_title LIKE '%{$key}%' or news.{$lang}_content LIKE '%{$key}%')" : "";
         $news = News::queryNews($lang,null,null,null,null, $where)->paginate(6);
         $newCates = NewCategories::getList($lang);
         $recentCates = array_slice($news->toArray()['data'], -3, 3, true);
@@ -104,13 +106,31 @@ class FrontendController
         return view('frontend.news.list', compact('news', 'newCates', 'recentCates'));
     }
 
-    public function newDetail($id)
+    public function newDetail($cateUrl, $new_url)
     {
         $lang = $this->getLang();
-        $new = News::getDetail($lang, $id);
+        $new = News::getDetailByUrl($lang, $new_url);
         $newCates = NewCategories::getList($lang);
         $recentCates = News::getNews($lang, null, 3, $new->category_id, $new->id);
         return view('frontend.news.detail', compact('new', 'newCates', 'recentCates'));
+    }
+
+    public function brandList(Request $request)
+    {
+        $lang = $this->getLang();
+        $keySearch = $request->get('key');
+        $where = !empty($keySearch) ? "({$lang}_title LIKE '%{$keySearch}%' or {$lang}_content LIKE '%{$keySearch}%')" : "";
+        $brands = Brands::queryList($lang, $where)->paginate(6);
+        $recentBrands = array_slice($brands->toArray()['data'], 0, 3, true);
+        return view('frontend.brands.list', compact('brands', 'recentBrands', 'keySearch'));
+    }
+
+    public function brandDetail($url)
+    {
+        $lang = $this->getLang();
+        $brand = Brands::getDetailByUrl($lang, $url);
+        $recentBrands = Brands::queryList($lang)->limit(3)->get();
+        return view('frontend.brands.detail', compact('brand', 'recentBrands'));
     }
 
     public function changeLanguage($lang)

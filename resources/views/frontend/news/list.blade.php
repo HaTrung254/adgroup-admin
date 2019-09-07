@@ -45,15 +45,19 @@
                             </div>
                         </form>
                     </div>
+                    @if(!empty($newCates))
                     <div class="sidebar-box ftco-animate fadeInUp ftco-animated">
                         <h3 class="heading">@trans('title.danhmuc')</h3>
                         <ul class="categories">
+                            <li><a href="{{ routeLang('new_list') }}">@trans('title.all')</a>
+                                </li>
                             @foreach($newCates as $item)
                                 <li><a href="{{ routeLangWithParams('new_category_list', $item->url) }}">{{ $item->title }} <span>({{ $item->new_count }})</span></a>
                                 </li>
                             @endforeach
                         </ul>
                     </div>
+                    @endif
 
                     <div class="sidebar-box ftco-animate">
                         <h3 class="heading">@trans('title.recent_blog')</h3>
@@ -62,7 +66,7 @@
                                 <a class="blog-img mr-4"
                                    style="background-image: url(@asset('/'.$item['image_url']));"></a>
                                 <div class="text">
-                                    <h3 class="heading-1"><a href="#">{{ $item['title'] }}</a></h3>
+                                    <h3 class="heading-1"><a href="{{ routeLangWithParams('new_detail', [$item['cate_url'], $item['url']]) }}">{{ $item['title'] }}</a></h3>
                                     <div class="meta">
                                         <div><a href="#"><span class="icon-calendar"></span>
                                                 @dateFormat($item['release_at'])</a></div>

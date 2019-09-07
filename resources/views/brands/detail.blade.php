@@ -3,9 +3,17 @@
     @if($errors->any())
         <span class="label label-danger form-control"><i class="fa fa-warning"></i> {{ $errors->first() }}</span>
     @endif
-    <form action="{{ empty($brand->id) ? route('brand_create') : route('brand_edit', $brand->id) }}" method="POST" class="form-horizontal card-body">
+    <form action="{{ empty($brand->id) ? route('brand_create') : route('brand_edit', $brand->id) }}" method="POST" class="form-horizontal card-body" enctype="multipart/form-data">
         {{ csrf_field() }}
         <input type="hidden" name="id" value="@getIfEmpty($brand->id)">
+        @if(!empty($brand->image_url))
+            <div class="form-group row">
+                <label for="image_url" class="col-sm-2 control-label">Ảnh hiện tại</label>
+                <div class="col-sm-10">
+                    <img style="width:200px;height: auto" src="@assetUrl($brand->image_url)">
+                </div>
+            </div>
+        @endif
         <div class="form-group row">
             <label for="order" class="col-sm-2 control-label">Hiển thị trên website</label>
             <div class="col-sm-10">
@@ -25,6 +33,20 @@
             <div class="col-sm-10">
                 <input class="form-control" id="en_title" name="en_title" placeholder="Title (EN)" required
                        value="@getIfEmpty($brand->en_title)">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="vn_description" class="col-sm-2 control-label">Slogan</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="vn_description" name="vn_description" placeholder="Slogan" required value="@getIfEmpty($brand->vn_description)">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="en_description" class="col-sm-2 control-label">Slogan (EN)</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="en_description" name="en_description" placeholder="Slogan (EN)" required value="@getIfEmpty($brand->en_description)">
             </div>
         </div>
 
@@ -56,7 +78,7 @@
         <div class="form-group row">
             <label for="image_url" class="col-sm-2 control-label">Ảnh mới</label>
             <div class="col-sm-10">
-                <input type="file" class="form-control" id="image_url" name="image_url" placeholder="Ảnh">
+                <input type="file" class="form-control" id="image_url" name="image_url" placeholder="Ảnh" @if(empty($brand->id)) required="" @endif>
             </div>
         </div>
         <div class="form-group row pull-right">

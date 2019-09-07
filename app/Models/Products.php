@@ -72,7 +72,7 @@ class Products extends Model
 
     public static function getDetailByUrl($lang, $url)
     {
-        return static::select(DB::raw("id, {$lang}_content as content, {$lang}_title as title, {$lang}_price as price, image_url, category_id, {$lang}_description as description, brand"))
+        return static::select(DB::raw("id, {$lang}_content as content, {$lang}_title as title, {$lang}_price as price, image_url, category_id, {$lang}_description as description, brand, {$lang}_url as url"))
         ->where('vn_url', $url)->orWhere('en_url', $url)
         ->first();
     }

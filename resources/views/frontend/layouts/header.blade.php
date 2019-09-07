@@ -90,12 +90,12 @@
                        aria-haspopup="true" aria-expanded="false">@trans('title.gioithieu')</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                         <a class="dropdown-item" href="#">@trans('title.congty')</a>
-                        <a class="dropdown-item" href="#">@trans('title.nsx')</a>
+                        <a class="dropdown-item" href="{{ routeLang('brand_list') }}">@trans('title.nsx')</a>
                         <a class="dropdown-item" href="#">@trans('title.khach')</a>
                     </div>
                 </li>
                 <li class="nav-item"><a href="{{ routeLang('new_list') }}" class="nav-link">@trans('title.tintuc')</a></li>
-                <li class="nav-item"><a href="{{ route('about') }}" class="nav-link">@trans('title.lienhe')</a></li>
+                <li class="nav-item"><a href="{{ routeLang('contact') }}" class="nav-link">@trans('title.lienhe')</a></li>
             </ul>
         </div>
     </div>

@@ -1,13 +1,13 @@
 @extends('layouts.master')
 @section('content')
     @if($errors->any())
-        <span class="label label-success form-control"><i class="fa fa-check"></i> Cập nhật nhãn hàng thành công</span>
+        <span class="label label-success form-control"><i class="fa fa-check"></i> {{ $errors->first() }}</span>
     @endif
     <table class="table table-hover">
         <thead>
         <tr>
             <th>Title</th>
-            <th>Title (EN)</th>
+            <th>Ảnh</th>
             <th>Hiển thị trên website</th>
             <th>Thứ tự hiển thị</th>
             <th><i class="fa fa-tasks" style=""></i></th>
@@ -17,7 +17,7 @@
         @foreach ($brands as $item)
             <tr>
                 <td>{!! $item->vn_title !!}</td>
-                <td>{!! $item->en_title !!}</td>
+                <td><img style="width:200px;height: auto" src="{{ asset($item->image_url) }}" /></td>
                 <td>@isDisplay($item->is_display)</td>
                 <td>{!! $item->order !!}</td>
                 <td>

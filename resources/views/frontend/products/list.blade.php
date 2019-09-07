@@ -20,9 +20,9 @@
                                 <a href="{{ routeLangWithParams('product_detail', [$item->cate_url, $item->url]) }}">
                                     <div class="card prd-card">
                                         <img src="@asset('/'. $item->image_url)" alt="" class="card-img-top">
-                                        <div class="card-body">
-                                            <hr>
-                                            <h5 class="card-title" style="font-size: 1rem; text-align: center">{{ $item->title }}</h5>
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title" style="font-size: 1rem"><b>{{ $item->title }}</b></h5>
+                                            <span>@trans('title.price'): @if(!empty($item->price)) {{ number_format($item->price) }} @trans('title.money') @else @trans('title.dangcapnhat') @endif</span>
                                         </div>
                                     </div>
                                 </a>
@@ -48,6 +48,7 @@
                     <div class="sidebar-box ftco-animate fadeInUp ftco-animated">
                         <h3 class="heading"> <strong>@trans('title.danhmucsanpham')</strong></h3>
                         <ul class="categories">
+                            <li><a href="{{ routeLang('product_list') }}">@trans('title.all')</a></li>
                             @foreach($productCates as $item)
                                 <li><a href="{{ routeLangWithParams('product_cate_list', $item->url) }}">{{ $item->title }} <span>({{ $item->product_count }})</span></a></li>
                             @endforeach

@@ -4,7 +4,7 @@
 <section class="ftco-section ftco-degree-bg">
       <div class="container">
         <div class="row">
-          <div class="col-lg-8 ftco-animate fadeInUp ftco-animated">
+          <div class="col-lg-8 ftco-animate fadeInUp ftco-animated" style="text-align: justify;">
 			<h2 class="mb-3">{{ $new->title }}</h2>
 			<span style="color:#aba6a6"><span class="icon-calendar"></span> @dateFormat($new->release_at)</span>
           	{!! $new->content !!}

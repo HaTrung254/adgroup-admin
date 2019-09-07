@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
             || $exception instanceof MethodNotAllowedHttpException) {
-            return redirect()->route('homepage');
+            return response(view('frontend.404'), 404);
         }
         return parent::render($request, $exception);
     }

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
     @if($errors->any())
-        <span class="label label-success form-control"><i class="fa fa-check"></i> Cập nhật tin tức thành công</span>
+        <span class="label label-success form-control"><i class="fa fa-check"></i> {{ $errors->first() }}</span>
     @endif
     <table class="table table-hover text-center">
         <thead>

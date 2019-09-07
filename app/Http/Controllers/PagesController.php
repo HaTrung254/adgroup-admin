@@ -41,10 +41,10 @@ class PagesController extends Controller
 
     }
 
-    public function checkout($productId)
+    public function checkout($productUrl)
     {
         $isAbout = 0;
-        $product = Products::getDetail($this->lang, $productId);
+        $product = Products::getDetailByUrl($this->lang, $productUrl);
         return view('frontend.pages.about', compact('isAbout', 'product'));
     }
 
