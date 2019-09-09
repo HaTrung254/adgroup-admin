@@ -54,7 +54,7 @@
                         <div class="card-body text-center">
                             <h5 class="card-title"> <strong>{{ $product->title }}</strong></h5>
                             <p class="card-text text-black">@trans('title.price'): @if(!empty($product->price)) {{ number_format($product->price) }} @trans('title.money') @else @trans('title.dangcapnhat') @endif</p>
-                            <a href="{{ route('checkout', $product->id) }}" class="card-link btn btn-primary center">@trans('title.contact_now')</a>
+                            <a href="{{ route('checkout', $product->url) }}" class="card-link btn btn-primary center">@trans('title.contact_now')</a>
                         </div>
                     </a>
                 </div>
@@ -85,7 +85,7 @@
                             <div class="card-body text-center">
                             <h5 class="card-title"> <strong>{{ $product->title }}</strong></h5>
                             <p class="card-text text-black">@trans('title.price'): @if(!empty($product->price)) {{ number_format($product->price) }} @trans('title.money') @else @trans('title.dangcapnhat') @endif</p>
-                            <a href="{{ route('checkout', $product->id) }}" class="card-link btn btn-primary center">@trans('title.contact_now')</a>
+                            <a href="{{ route('checkout', $product->url) }}" class="card-link btn btn-primary center">@trans('title.contact_now')</a>
                         </div>
                         </a>
                     </div>
