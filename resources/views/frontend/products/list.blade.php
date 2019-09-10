@@ -10,7 +10,7 @@
                         <span style="color: #423f3b">@trans('title.update_product')</span>
                     @endif
                     @foreach($products as $key => $item)
-                        @if($key != 0 && $key != count($products) - 1 && $key % 3 == 0)
+                        @if($key != 0  && $key % 3 == 0)
                             </div>
                         @endif
                         @if($key % 3 == 0)
