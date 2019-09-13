@@ -35,7 +35,7 @@
 {{--search--}}
 <div class="container">
     <div class="row justify-content-end">
-        <div class="col-12 col-md-10 col-lg-8 search-bar">
+        <div class="col-12 col-md-6 col-lg-6 search-bar">
             <form method="post" action="{{ routeLang('product_list') }}" class="card card-sm">
                 {{ csrf_field() }}
                 <div class="card-body row no-gutters align-items-center">
@@ -50,7 +50,7 @@
                     </div>
                     <!--end of col-->
                     <div class="col-auto">
-                        <button class="btn btn-lg btn-primary" type="submit">Search</button>
+                        <button class="btn btn-md btn-primary" type="submit">Search</button>
                     </div>
                     <!--end of col-->
                 </div>
