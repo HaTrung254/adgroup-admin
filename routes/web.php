@@ -4,7 +4,9 @@ Auth::routes();
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/', 'HomeController@sliders')->name('sliders');
     Route::match(['get', 'post'], '/slider-edit/{id}', 'HomeController@sliderEdit')->name('slider_edit');
-   
+    Route::match(['get', 'post'], '/slider-create', 'HomeController@sliderCreate')->name('slider_create');
+    Route::get('/slider-delete/{id}', 'HomeController@sliderDelete')->name('slider_delete');
+
     /** categories - start */
     Route::get('/categories', 'HomeController@categories')->name('categories');
     Route::match(['get', 'post'], '/category-edit/{id}', 'HomeController@categoryEdit')->name('category_edit');
