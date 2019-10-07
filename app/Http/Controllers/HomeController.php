@@ -43,49 +43,87 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function sliders(){
-        $sliders = Sliders::all();
-        return view('sliders.list', ['sliders' => $sliders, 'title' => 'Sliders', 'navNumber' => static::SLIDERS]);
+    public function sliders(Request $request){
+        $key = $request->get('key');
+        $sliders = !empty($request->get('key')) ?
+            Sliders::where('vn_title', 'LIKE', "%{$key}%")
+                ->orWhere('en_title', 'LIKE', "%{$key}%")
+                ->orWhere('vn_sub_title', 'LIKE', "%{$key}%")
+                ->orWhere('en_sub_title', 'LIKE', "%{$key}%")
+                ->orWhere('vn_vertical_title', 'LIKE', "%{$key}%")
+                ->orWhere('en_vertical_title', 'LIKE', "%{$key}%")
+                ->orWhere('vn_horizontal_title', 'LIKE', "%{$key}%")
+                ->orWhere('en_horizontal_title', 'LIKE', "%{$key}%")
+                ->orderBy('order', 'desc')->paginate(15) :
+            Sliders::orderBy('order', 'desc')->paginate(15);
+        return view('sliders.list', ['sliders' => $sliders, 'title' => 'Sliders', 'navNumber' => static::SLIDERS,
+            'hasSearch' => true,
+            'routeCreate' => route('slider_create'),
+            'routeSearch' => route('sliders'), 'key' => $key]);
+    }
+
+    public function setSliderValue($request)
+    {
+        $value = [
+            'vn_title' => $request->get('vn_title'),
+            'en_title' => $request->get('en_title'),
+            'vn_sub_title' => $request->get('vn_sub_title'),
+            'en_sub_title' => $request->get('en_sub_title'),
+            'vn_vertical_title' => $request->get('vn_vertical_title'),
+            'en_vertical_title' => $request->get('en_vertical_title'),
+            'vn_horizontal_title' => $request->get('vn_horizontal_title'),
+            'en_horizontal_title' => $request->get('en_horizontal_title'),
+            'vn_content' => $request->get('vn_content'),
+            'en_content' => $request->get('en_content'),
+            'order' => $request->get('order'),
+            'is_display' => $request->get('is_display') == "on" ? 1 : 0,
+        ];
+        if($request->hasFile('image_url')) {
+            $file = $request->file('image_url');
+            $fileName = "slider_". date('YmdHis') . '.' . $file->getClientOriginalExtension();
+            $value['image_url'] = static::FOLDER_UPLOAD."/".$fileName;
+            $file->move(static::FOLDER_UPLOAD, $fileName);
+        }
+        return $value;
+    }
+
+    public function sliderCreate(Request $request){
+        if($request->isMethod('POST')) {
+            try{
+                $value = $this->setSliderValue($request);
+                Sliders::create($value);
+                return redirect()->route('sliders')->withErrors("Thêm slider thành công!");
+            } catch (\Exception $e) {
+                return redirect()->route('slider_create')->withErrors(static::ERROR_500);
+            }
+
+        }
+        return view('sliders.edit', ['title' => 'Thêm slider', 'navNumber' => static::SLIDERS]);
     }
 
     public function sliderEdit($id, Request $request){
         $id = !empty($id) ? $id : $request->get('id');
-        $slider = Sliders::find($id);    
+        $slider = Sliders::find($id);
         if($request->isMethod('POST')) {
             try{
-                DB::beginTransaction();
-                $value = [
-                    'vn_title' => $request->get('vn_title'),
-                    'en_title' => $request->get('en_title'),
-                    'vn_sub_title' => $request->get('vn_sub_title'),
-                    'en_sub_title' => $request->get('en_sub_title'),
-                    'vn_vertical_title' => $request->get('vn_vertical_title'),
-                    'en_vertical_title' => $request->get('en_vertical_title'),
-                    'vn_horizontal_title' => $request->get('vn_horizontal_title'),
-                    'en_horizontal_title' => $request->get('en_horizontal_title'),
-                    'vn_content' => $request->get('vn_content'),
-                    'en_content' => $request->get('en_content'),
-                ];
-                if($request->hasFile('image_url')) {
-                    $file = $request->file('image_url');
-                    $fileName = "slider_". $id . '.' . $file->getClientOriginalExtension();
-                    $value['image_url'] = static::FOLDER_UPLOAD."/".$fileName;
-                    try{
-                        $file->move(static::FOLDER_UPLOAD, $fileName);
-                    } catch (\Exception $e) {
-                        return redirect()->route('slider_edit', $id)->withErrors("");
-                    }
-                }
+                $value = $this->setSliderValue($request);
                 $slider->update($value);
-                DB::commit();
-                return redirect()->route('sliders')->withErrors("");
+                return redirect()->route('sliders')->withErrors("Sửa slider thành công!");
             } catch (\Exception $e) {
-                DB::rollback();
-                return redirect()->route('slider_edit', $id)->withErrors("");
+                return redirect()->route('slider_edit', $id)->withErrors(static::ERROR_500);
             }
 
         }
         return view('sliders.edit', ['slider' => $slider, 'title' => 'Sửa slider', 'navNumber' => static::SLIDERS]);
+    }
+
+    public function sliderDelete($id){
+        $slider = Sliders::find($id);
+        if($slider != null) {
+            $slider->delete();
+        }
+
+        return redirect()->route('sliders')->withErrors("Đã xóa 1 slider.");
     }
 
     public function categories(Request $request){

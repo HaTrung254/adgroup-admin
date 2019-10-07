@@ -12,7 +12,7 @@ class Sliders extends Model
     public $timestamps = false;
     public $fillable = ['vn_title', 'en_title', 'vn_sub_title', 'en_sub_title', 'vn_vertical_title', 'en_vertical_title',
                     'vn_horizontal_title', 'en_horizontal_title', 'vn_content',
-                    'en_content', 'image_url'];
+                    'en_content', 'image_url', 'is_display', 'order'];
 
     public static function getSliders($lang = 'vn')
     {
@@ -23,6 +23,8 @@ class Sliders extends Model
                     {$lang}_horizontal_title as horizontal_title, 
                     {$lang}_content as content,
                     image_url"))
+            ->where('is_display', '1')
+            ->orderBy('order')
             ->get();
     }
 }
